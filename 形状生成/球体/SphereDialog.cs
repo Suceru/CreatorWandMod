@@ -40,7 +40,7 @@ namespace CreatorModAPI
             XElement node = ContentManager.Get<XElement>("Dialog/Sphere", (string)null);
             LoadChildren(this, node);
             GeneralSet();
-            ((FontTextWidget)Children.Find<LabelWidget>("Sphere")).set_Text(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Sphere", "Sphere"));
+            ((FontTextWidget)Children.Find<LabelWidget>("Sphere")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Sphere", "Sphere"));
             XRadius = Children.Find<SliderWidget>("XSlider");
             YRadius = Children.Find<SliderWidget>("YSlider");
             ZRadius = Children.Find<SliderWidget>("ZSlider");
@@ -67,9 +67,9 @@ namespace CreatorModAPI
             DoublePositionButton.Color = (DoublePosition ? Color.Yellow : Color.White);
             AdvancedGenerate.IsVisible = advanced;
             DoublePositionButton.IsVisible = advanced;
-            ((FontTextWidget)XdelayLabel).set_Text(advanced ? string.Format(CreatorMain.Display_Key_Dialog("spdialogx"), (int)XRadius.Value) : string.Format(CreatorMain.Display_Key_Dialog("spdialogr"), (int)XRadius.Value));
-            ((FontTextWidget)YdelayLabel).set_Text(string.Format(CreatorMain.Display_Key_Dialog("spdialogy"), (int)YRadius.Value));
-            ((FontTextWidget)ZdelayLabel).set_Text(string.Format(CreatorMain.Display_Key_Dialog("spdialogz"), (int)ZRadius.Value));
+            ((FontTextWidget)XdelayLabel).Text=(advanced ? string.Format(CreatorMain.Display_Key_Dialog("spdialogx"), (int)XRadius.Value) : string.Format(CreatorMain.Display_Key_Dialog("spdialogr"), (int)XRadius.Value));
+            ((FontTextWidget)YdelayLabel).Text=(string.Format(CreatorMain.Display_Key_Dialog("spdialogy"), (int)YRadius.Value));
+            ((FontTextWidget)ZdelayLabel).Text=(string.Format(CreatorMain.Display_Key_Dialog("spdialogz"), (int)ZRadius.Value));
             int id = blockIconWidget.Value;
             if (DoublePositionButton.IsClicked)
             {

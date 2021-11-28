@@ -5,7 +5,7 @@ namespace CreatorModAPI
 {
     public class SubsystemMemoryBankBlockBehavior1 : SubsystemMemoryBankBlockBehavior
     {
-        public static string fName = "MemoryBankBlockBehavior";
+        public static new string fName = "MemoryBankBlockBehavior";
 
         public override int[] HandledBlocks => new int[1]
         {

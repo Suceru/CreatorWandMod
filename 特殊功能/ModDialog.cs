@@ -42,7 +42,7 @@ namespace CreatorModAPI
                 this.listView = listView;
                 XElement node = ContentManager.Get<XElement>("Dialog/Manager3", (string)null);
                 LoadChildren(this, node);
-                ((FontTextWidget)Children.Find<LabelWidget>("Name")).set_Text(CreatorMain.Display_Key_Dialog("moddialogname"));
+                ((FontTextWidget)Children.Find<LabelWidget>("Name")).Text=(CreatorMain.Display_Key_Dialog("moddialogname"));
                 cancelButton = Children.Find<ButtonWidget>("Cancel");
                 cancelButton.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Manager3", "Cancel");
                 OK = Children.Find<ButtonWidget>("OK");
@@ -165,7 +165,7 @@ namespace CreatorModAPI
             player = creatorAPI.componentMiner.ComponentPlayer;
             XElement node = ContentManager.Get<XElement>("Widget/CustomModule", (string)null);
             LoadChildren(this, node);
-            ((FontTextWidget)Children.Find<LabelWidget>("ClassMOD")).set_Text(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "CustomModule", "ClassMOD"));
+            ((FontTextWidget)Children.Find<LabelWidget>("ClassMOD")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "CustomModule", "ClassMOD"));
             OK = Children.Find<ButtonWidget>("OK");
             OK.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "CustomModule", "OK");
             ExportOnekeyButton = Children.Find<ButtonWidget>("Export Key");

@@ -30,7 +30,7 @@ namespace CreatorModAPI
                 this.listView = listView;
                 XElement node = ContentManager.Get<XElement>("Dialog/Manager3", (string)null);
                 LoadChildren(this, node);
-                ((FontTextWidget)Children.Find<LabelWidget>("Name")).set_Text(CreatorMain.Display_Key_Dialog("moddialogname"));
+                ((FontTextWidget)Children.Find<LabelWidget>("Name")).Text=(CreatorMain.Display_Key_Dialog("moddialogname"));
                 cancelButton = Children.Find<ButtonWidget>("Cancel");
                 cancelButton.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Manager3", "Cancel");
                 OK = Children.Find<ButtonWidget>("OK");
@@ -164,7 +164,7 @@ namespace CreatorModAPI
             player = creatorAPI.componentMiner.ComponentPlayer;
             XElement node = ContentManager.Get<XElement>("Dialog/CopyandPaste", (string)null);
             LoadChildren(this, node);
-            ((FontTextWidget)Children.Find<LabelWidget>("Copy and Paste")).set_Text(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "CopyandPaste", "Copy and Paste"));
+            ((FontTextWidget)Children.Find<LabelWidget>("Copy and Paste")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "CopyandPaste", "Copy and Paste"));
             CopyButton = Children.Find<ButtonWidget>("Copy");
             CopyButton.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "CopyandPaste", "Copy");
             DerivedButton = Children.Find<ButtonWidget>("Export");

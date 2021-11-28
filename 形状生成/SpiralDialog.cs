@@ -13,7 +13,7 @@ namespace CreatorModAPI
         public SpiralDialog(CreatorAPI creatorAPI)
             : base(creatorAPI)
         {
-            ((FontTextWidget)Children.Find<LabelWidget>("Name")).set_Text(CreatorMain.Display_Key_Dialog("spidialog1"));
+            ((FontTextWidget)Children.Find<LabelWidget>("Name")).Text=(CreatorMain.Display_Key_Dialog("spidialog1"));
             Children.Find<StackPanelWidget>("Data3").IsVisible = true;
             Number = Children.Find<SliderWidget>("Slider3");
             numberLabelWidget = Children.Find<LabelWidget>("Slider data3");
@@ -24,8 +24,8 @@ namespace CreatorModAPI
         public override void Update()
         {
             base.Update();
-            ((FontTextWidget)radiusDelayLabel).set_Text(string.Format(CreatorMain.Display_Key_Dialog("spidialogr"), (int)Radius.Value));
-            ((FontTextWidget)numberLabelWidget).set_Text(string.Format(CreatorMain.Display_Key_Dialog("spidialogn"), (int)Number.Value));
+            ((FontTextWidget)radiusDelayLabel).Text=(string.Format(CreatorMain.Display_Key_Dialog("spidialogr"), (int)Radius.Value));
+            ((FontTextWidget)numberLabelWidget).Text=(string.Format(CreatorMain.Display_Key_Dialog("spidialogn"), (int)Number.Value));
         }
 
         public override void upClickButton(int id)

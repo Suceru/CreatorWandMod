@@ -331,7 +331,7 @@ namespace CreatorModAPI
                                     }
                                     else if (setPosN == 1)
                                     {
-                                        clickpos = clickpos;
+                                        //clickpos +=0;
                                     }
 
                                     setPosN++;

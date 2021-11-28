@@ -13,7 +13,7 @@ namespace CreatorModAPI
         public CylindricalDialog(CreatorAPI creatorAPI)
             : base(creatorAPI)
         {
-            ((FontTextWidget)Children.Find<LabelWidget>("Name")).set_Text(CreatorMain.Display_Key_Dialog("cyldialogn"));
+            ((FontTextWidget)Children.Find<LabelWidget>("Name")).Text=(CreatorMain.Display_Key_Dialog("cyldialogn"));
             Children.Find<StackPanelWidget>("Data3").IsVisible = true;
             ZRadius = Children.Find<SliderWidget>("Slider3");
             zRadiusLabelWidget = Children.Find<LabelWidget>("Slider data3");
@@ -22,8 +22,8 @@ namespace CreatorModAPI
         public override void Update()
         {
             base.Update();
-            ((FontTextWidget)radiusDelayLabel).set_Text(string.Format(CreatorMain.Display_Key_Dialog("cyldialog1"), (int)Radius.Value));
-            ((FontTextWidget)zRadiusLabelWidget).set_Text(string.Format(CreatorMain.Display_Key_Dialog("cyldialog2"), (int)ZRadius.Value));
+            ((FontTextWidget)radiusDelayLabel).Text=(string.Format(CreatorMain.Display_Key_Dialog("cyldialog1"), (int)Radius.Value));
+            ((FontTextWidget)zRadiusLabelWidget).Text=(string.Format(CreatorMain.Display_Key_Dialog("cyldialog2"), (int)ZRadius.Value));
         }
 
         public override void upClickButton(int id)

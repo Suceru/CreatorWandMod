@@ -9,7 +9,7 @@ namespace CreatorModAPI
         public CircleDialog(CreatorAPI creatorAPI)
             : base(creatorAPI)
         {
-            ((FontTextWidget)Children.Find<LabelWidget>("Name")).set_Text(CreatorMain.Display_Key_Dialog("cirdialogn"));
+            ((FontTextWidget)Children.Find<LabelWidget>("Name")).Text=(CreatorMain.Display_Key_Dialog("cirdialogn"));
             Y_Shaft.Text = CreatorMain.Display_Key_Dialog("pilldialogx2");
         }
 

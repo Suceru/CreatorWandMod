@@ -31,7 +31,7 @@ namespace CreatorModAPI
             X_Shaft.Text = CreatorMain.Display_Key_Dialog("pilldialog1");
             Y_Shaft.Text = "+" + CreatorMain.Display_Key_Dialog("pilldialog2");
             Z_Shaft.Text = CreatorMain.Display_Key_Dialog("pilldialog3");
-            ((FontTextWidget)Children.Find<LabelWidget>("Name")).set_Text(CreatorMain.Display_Key_Dialog("pilldialog4"));
+            ((FontTextWidget)Children.Find<LabelWidget>("Name")).Text=(CreatorMain.Display_Key_Dialog("pilldialog4"));
             Radius = Children.Find<SliderWidget>("Slider1");
             radiusDelayLabel = Children.Find<LabelWidget>("Slider data1");
             Height = Children.Find<SliderWidget>("Slider2");
@@ -48,8 +48,8 @@ namespace CreatorModAPI
         public override void Update()
         {
             base.Update();
-            ((FontTextWidget)radiusDelayLabel).set_Text(string.Format(CreatorMain.Display_Key_Dialog("pilldialogr"), (int)Radius.Value));
-            ((FontTextWidget)heightDelayLabel).set_Text(string.Format(CreatorMain.Display_Key_Dialog("pilldialogl"), (int)Height.Value));
+            ((FontTextWidget)radiusDelayLabel).Text=(string.Format(CreatorMain.Display_Key_Dialog("pilldialogr"), (int)Radius.Value));
+            ((FontTextWidget)heightDelayLabel).Text=(string.Format(CreatorMain.Display_Key_Dialog("pilldialogl"), (int)Height.Value));
             upDataButton();
             upClickButton(blockIconWidget.Value);
         }

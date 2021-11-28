@@ -25,7 +25,7 @@ namespace CreatorModAPI
             LoadChildren(this, node);
             GeneralSet();
             setShaftXYZ();
-            ((FontTextWidget)Children.Find<LabelWidget>("Name")).set_Text(CreatorMain.Display_Key_Dialog("pddialog1"));
+            ((FontTextWidget)Children.Find<LabelWidget>("Name")).Text=(CreatorMain.Display_Key_Dialog("pddialog1"));
             Radius = Children.Find<SliderWidget>("Slider");
             delayLabel = Children.Find<LabelWidget>("Slider data");
             Children.Find<ButtonWidget>("X-axis").Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Octahedron", "X-axis");
@@ -42,7 +42,7 @@ namespace CreatorModAPI
         public override void Update()
         {
             base.Update();
-            ((FontTextWidget)delayLabel).set_Text(string.Format(CreatorMain.Display_Key_Dialog("pddialog2"), (int)Radius.Value));
+            ((FontTextWidget)delayLabel).Text=(string.Format(CreatorMain.Display_Key_Dialog("pddialog2"), (int)Radius.Value));
             upDataButton();
             if (SoildButton.IsClicked)
             {

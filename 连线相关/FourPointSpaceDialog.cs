@@ -18,7 +18,7 @@ namespace CreatorModAPI
             XElement node = ContentManager.Get<XElement>("Dialog/Manager3", (string)null);
             LoadChildren(this, node);
             GeneralSet();
-            ((FontTextWidget)Children.Find<LabelWidget>("Name")).set_Text(CreatorMain.Display_Key_Dialog("fpointSdialog1"));
+            ((FontTextWidget)Children.Find<LabelWidget>("Name")).Text=(CreatorMain.Display_Key_Dialog("fpointSdialog1"));
             OKButton = Children.Find<ButtonWidget>("OK");
             OKButton.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Manager3", "OK");
             Children.Find<BevelledButtonWidget>("Cancel").Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Manager3", "Cancel");

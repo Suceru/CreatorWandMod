@@ -26,9 +26,9 @@ namespace CreatorModAPI
             player = creatorAPI.componentMiner.ComponentPlayer;
             XElement xElement = ContentManager.Get<XElement>("Dialog/Replace", (string)null);
             LoadChildren(this, new XElement(xElement));
-            ((FontTextWidget)Children.Find<LabelWidget>("Replace1")).set_Text(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Replace", "Replace1"));
-            ((FontTextWidget)Children.Find<LabelWidget>("Index1:")).set_Text(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Replace", "Index1:"));
-            ((FontTextWidget)Children.Find<LabelWidget>("Index2:")).set_Text(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Replace", "Index2:"));
+            ((FontTextWidget)Children.Find<LabelWidget>("Replace1")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Replace", "Replace1"));
+            ((FontTextWidget)Children.Find<LabelWidget>("Index1:")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Replace", "Index1:"));
+            ((FontTextWidget)Children.Find<LabelWidget>("Index2:")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Replace", "Index2:"));
             cancelButton = Children.Find<ButtonWidget>("Cancel");
             cancelButton.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Replace", "Cancel");
             replaceButton = Children.Find<ButtonWidget>("Replace");

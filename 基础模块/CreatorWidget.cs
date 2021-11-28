@@ -578,7 +578,7 @@ namespace CreatorModAPI
                             a = num3;
                             try
                             {
-                                list.Add(new Tuple<string, Action>(Enum.GetName(typeof(Language), num3)!.ToString(), delegate
+                                list.Add(new Tuple<string, Action>(Enum.GetName(typeof(Language), num3).ToString(), delegate
                                 {
                                     CreatorAPI.Language = (Language)Enum.ToObject(typeof(Language), a);
                                     CreatorAPI.IsAddedToProject = false;

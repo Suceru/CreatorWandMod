@@ -212,9 +212,9 @@ namespace CreatorModAPI
         {
             foreach (XElement item in CreatorAPI.CreatorDisplayDataDialog)
             {
-                if (item.Attribute((XName?)"Text")!.Value == Key)
+                if (item.Attribute("Text").Value == Key)
                 {
-                    return item.Attribute((XName?)"DisplayName")!.Value.Replace("\\n", "\n");
+                    return item.Attribute("DisplayName").Value.Replace("\\n", "\n");
                 }
             }
 
@@ -232,12 +232,12 @@ namespace CreatorModAPI
 
                 {
                     foreach (XElement item2 in from xe in item.Elements("CreatorDisplayData")
-                                               where xe.Attribute((XName?)"Language")!.Value == Language
+                                               where xe.Attribute("Language").Value == Language
                                                select xe)
                     {
-                        if (item2.Attribute((XName?)"Text")!.Value == Key)
+                        if (item2.Attribute("Text").Value == Key)
                         {
-                            return item2.Attribute((XName?)"DisplayName")!.Value.Replace("\\n", "\n");
+                            return item2.Attribute("DisplayName").Value.Replace("\\n", "\n");
                         }
                     }
 

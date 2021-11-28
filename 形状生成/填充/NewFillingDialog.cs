@@ -18,7 +18,7 @@ namespace CreatorModAPI
             XElement node = ContentManager.Get<XElement>("Dialog/Fill", (string)null);
             LoadChildren(this, node);
             GeneralSet();
-            ((FontTextWidget)Children.Find<LabelWidget>("Fill")).set_Text(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Fill", "Fill"));
+            ((FontTextWidget)Children.Find<LabelWidget>("Fill")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Fill", "Fill"));
             SoildButton = Children.Find<ButtonWidget>("Fill1");
             SoildButton.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Fill", "Fill1");
             Children.Find<BevelledButtonWidget>("Cancel").Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Fill", "Cancel");

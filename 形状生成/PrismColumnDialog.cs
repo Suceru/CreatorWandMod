@@ -9,7 +9,7 @@ namespace CreatorModAPI
         public PrismColumnDialog(CreatorAPI creatorAPI)
             : base(creatorAPI)
         {
-            ((FontTextWidget)Children.Find<LabelWidget>("Name")).set_Text(CreatorMain.Display_Key_Dialog("pcddialog1"));
+            ((FontTextWidget)Children.Find<LabelWidget>("Name")).Text=(CreatorMain.Display_Key_Dialog("pcddialog1"));
         }
 
         public override void upClickButton(int id)

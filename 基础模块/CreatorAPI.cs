@@ -94,10 +94,10 @@ namespace CreatorModAPI
                 }
 
                 XElement xElement = ContentManager.Get<XElement>("CreatorDisplay", (string)null);
-                CreatorDisplayDataDialog = from xe in xElement.Element((XName?)"CreatorDisplayDialog")!.Elements("CreatorDisplayData")
-                                           where xe.Attribute((XName?)"Language")!.Value == Language.ToString()
+                CreatorDisplayDataDialog = from xe in xElement.Element("CreatorDisplayDialog").Elements("CreatorDisplayData")
+                                           where xe.Attribute("Language").Value == Language.ToString()
                                            select xe;
-                CreatorDisplayDataUI = xElement.Element((XName?)"CreatorDisplayUI")!.Elements();
+                CreatorDisplayDataUI = xElement.Element("CreatorDisplayUI").Elements();
                 ContentManager.Dispose("CreatorDisplay");
             }
             catch (Exception ex)
