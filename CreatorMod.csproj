@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: D:\Users\12464\Desktop\sc2\css\CreatorMod_Android.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CD19B127-78AD-45F0-989E-B79E265E714B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>CreatorMod</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>CreatorModAPI</RootNamespace>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Mods\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Mods\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Comms">
+      <HintPath>..\..\..\..\Ruthless\dll\Comms.dll</HintPath>
+    </Reference>
+    <Reference Include="Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\run\Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="EntitySystem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\run\EntitySystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Survivalcraft, Version=2.2.40.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\run\Survivalcraft.exe</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Xml">
+      <HintPath>..\..\..\DLLbao\Survivalcraft 2_2.2.10.4 原版DLL文件\dlls\System.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <HintPath>..\..\..\DLLbao\Survivalcraft 2_2.2.10.4 原版DLL文件\dlls\System.Xml.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Serialization" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="世界设置\编辑区域\NewEditChunkDialog.cs" />
+    <Compile Include="基础模块\input\TextBoxWidget.cs" />
+    <Compile Include="基础模块\LocalTool\ProbeFunctions.cs" />
+    <Compile Include="基础模块\相机\FPPRCamera.cs" />
+    <Compile Include="基础模块\语言\Language.cs" />
+    <Compile Include="形状生成\填充\NewFillingDialog.cs" />
+    <Compile Include="特殊功能\MemoryBlockH\SubsystemMemoryBankBlockBehavior.cs" />
+    <Compile Include="特殊功能\MemoryBlockH\MemoryBlockHCW.cs" />
+    <Compile Include="特殊功能\Weather\SubsystemWeatherBehavior.cs" />
+    <Compile Include="特殊功能\复制粘贴\CopyAndPaste.cs" />
+    <Compile Include="基础模块\CreatorAPI.cs" />
+    <Compile Include="特殊功能\旋转\RotateBlockBehavior.cs" />
+    <Compile Include="特殊功能\替换\NewReplace.cs" />
+    <Compile Include="特殊功能\替换\NewReplaceDialog.cs" />
+    <Compile Include="特殊功能\镜像\MirrorBlockBehavior.cs" />
+    <Compile Include="特殊功能\预览\CPPreview.cs" />
+    <Compile Include="基础模块\CreatorBlockBehavior.cs" />
+    <Compile Include="基础模块\CreatorGenerationAlgorithm.cs" />
+    <Compile Include="基础模块\CreatorMain.cs" />
+    <Compile Include="基础模块\CreatorWidget.cs" />
+    <Compile Include="基础模块\块数据\ChunkData.cs" />
+    <Compile Include="形状生成\CircleDialog.cs" />
+    <Compile Include="特殊功能\复制粘贴\CopyPasteDialog.cs" />
+    <Compile Include="基础模块\CreatorModAPIEditPaletteDialog.cs" />
+    <Compile Include="形状生成\CylindricalDialog.cs" />
+    <Compile Include="世界设置\DIS\EditRegionDialog.cs" />
+    <Compile Include="世界设置\编辑世界\EditWorldDialog.cs" />
+    <Compile Include="形状生成\过期功能\FillingDialog.cs" />
+    <Compile Include="连线相关\FourPointSpaceDialog.cs" />
+    <Compile Include="基础模块\InterfaceDialog.cs" />
+    <Compile Include="世界设置\等级设置\LevelSetDialog.cs" />
+    <Compile Include="形状生成\迷宫\MazeDialog.cs" />
+    <Compile Include="特殊功能\ModDialog.cs" />
+    <Compile Include="形状生成\山脉\MountainDialog.cs" />
+    <Compile Include="特殊功能\过期功能\OnekeyGenerationDialog.cs" />
+    <Compile Include="形状生成\PavageDialog.cs" />
+    <Compile Include="形状生成\PillarsDialog.cs" />
+    <Compile Include="形状生成\PrismColumnDialog.cs" />
+    <Compile Include="形状生成\PrismDialog.cs" />
+    <Compile Include="形状生成\PyramidDialog.cs" />
+    <Compile Include="形状生成\矩形界面\RectangularDialog.cs" />
+    <Compile Include="特殊功能\过期功能\ReplaceDialog.cs" />
+    <Compile Include="基础模块\SetDialog.cs" />
+    <Compile Include="世界设置\SetModeDialog.cs" />
+    <Compile Include="形状生成\球体\SphereDialog.cs" />
+    <Compile Include="形状生成\SpiralDialog.cs" />
+    <Compile Include="连线相关\ThreePointToPlaneDialog.cs" />
+    <Compile Include="特殊功能\TransferDialog.cs" />
+    <Compile Include="连线相关\TwoPointLineDialog.cs" />
+    <Compile Include="基础模块\文件操作\FileOperation.cs" />
+    <Compile Include="形状生成\迷宫\Maze.cs" />
+    <Compile Include="特殊功能\过期功能\OnekeyGeneration.cs" />
+    <Compile Include="特殊功能\过期功能\OnTouch.cs" />
+    <Compile Include="基础模块\地形\CreatorNormalTerrain.cs" />
+    <Compile Include="基础模块\CreateBlockType.cs" />
+    <Compile Include="基础模块\地形\CreatorTerrainType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="基础模块\Widget\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="pare\Creator Wand.csv" />
+    <None Include="pare\Creator_Wand_SC.xdb" />
+    <None Include="pare\modinfo.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="pare\Assets\CreatorAPIWidget.xml" />
+    <Content Include="pare\Assets\CreatorDisplay.xml" />
+    <Content Include="pare\Assets\Dialog\Column.xml" />
+    <Content Include="pare\Assets\Dialog\CopyandPaste.xml" />
+    <Content Include="pare\Assets\Dialog\Cuboid.xml" />
+    <Content Include="pare\Assets\Dialog\CustomPoint.xml" />
+    <Content Include="pare\Assets\Dialog\EditChunk.xml" />
+    <Content Include="pare\Assets\Dialog\EditWorld.xml" />
+    <Content Include="pare\Assets\Dialog\Fill.xml" />
+    <Content Include="pare\Assets\Dialog\FillX.xml" />
+    <Content Include="pare\Assets\Dialog\GameMode.xml" />
+    <Content Include="pare\Assets\Dialog\Level.xml" />
+    <Content Include="pare\Assets\Dialog\Manager3.xml" />
+    <Content Include="pare\Assets\Dialog\ModSettings.xml" />
+    <Content Include="pare\Assets\Dialog\Mountains.xml" />
+    <Content Include="pare\Assets\Dialog\Octahedron.xml" />
+    <Content Include="pare\Assets\Dialog\OneClickGeneration.xml" />
+    <Content Include="pare\Assets\Dialog\Replace.xml" />
+    <Content Include="pare\Assets\Dialog\Sphere.xml" />
+    <Content Include="pare\Assets\Dialog\Teleport.xml" />
+    <Content Include="pare\Assets\Dialog\Tile.xml" />
+    <Content Include="pare\Assets\NewCreatorAPIWidget.xml" />
+    <Content Include="pare\Assets\Widget\CustomModule.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

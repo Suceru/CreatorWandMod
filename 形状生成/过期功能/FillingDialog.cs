@@ -1,0 +1,270 @@
+﻿// Decompiled with JetBrains decompiler
+// Type: CreatorModAPI.FillingDialog
+// Assembly: CreatorMod_Android, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: B7D80CF5-3F89-46A6-B943-D040364C2CEC
+// Assembly location: D:\Users\12464\Desktop\sc2\css\CreatorMod_Android.dll
+
+/*填充界面*/
+/*namespace CreatorModAPI-=  public class FillingDialog : InterfaceDialog*/
+using Engine;
+using Game;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+
+namespace CreatorModAPI
+{
+    public class FillingDialog : InterfaceDialog
+    {
+        public bool typeBool = true;
+        private readonly ButtonWidget pillingButton;
+        private readonly ButtonWidget pilling2Button;
+
+        public FillingDialog(CreatorAPI creatorAPI)
+          : base(creatorAPI)
+        {
+            XElement node = ContentManager.Get<XElement>("Dialog/Fill");
+
+            LoadChildren(this, node);
+            GeneralSet();
+            setShaftXYZ();
+
+            switch (CreatorAPI.Language)
+            {
+                case Language.zh_CN:
+                    Y_Shaft.Text = "正Y轴";
+                    break;
+                case Language.en_US:
+                    Y_Shaft.Text = "Y-axis";
+                    break;
+                default:
+                    Y_Shaft.Text = "正Y轴";
+                    break;
+            }
+            pillingButton = Children.Find<ButtonWidget>("填充");
+            pilling2Button = Children.Find<ButtonWidget>("填充2");
+            LoadProperties(this, node);
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            if (pillingButton.IsClicked)
+            {
+                FillingBlock();
+                DialogsManager.HideDialog(this);
+            }
+            if (pilling2Button.IsClicked)
+            {
+                FillingBlock(true);
+                DialogsManager.HideDialog(this);
+            }
+            upDataButton();
+        }
+
+        public void FillingBlock(bool limit = false)
+        {
+            Point3 Start = creatorAPI.Position[0];
+            Point3 End = creatorAPI.Position[1];
+            CreatorMain.Math.StartEnd(ref Start, ref End);
+            if (createType == CreatorMain.CreateType.X)
+            {
+                int x1 = Start.X;
+                Start.X = Start.Y;
+                Start.Y = x1;
+                int x2 = End.X;
+                End.X = End.Y;
+                End.Y = x2;
+            }
+            else if (createType == CreatorMain.CreateType.Z)
+            {
+                int z1 = Start.Z;
+                Start.Z = Start.Y;
+                Start.Y = z1;
+                int z2 = End.Z;
+                End.Z = End.Y;
+                End.Y = z2;
+            }
+            Task.Run(() =>
+           {
+               int num1 = 0;
+               ChunkData chunkData = new ChunkData(creatorAPI);
+               creatorAPI.revokeData = new ChunkData(creatorAPI);
+               for (int x = End.X; x <= Start.X; ++x)
+               {
+                   for (int z = End.Z; z <= Start.Z; ++z)
+                   {
+                       bool flag1 = false;
+                       bool flag2 = false;
+                       for (int y = End.Y; y <= Start.Y; ++y)
+                       {
+                           if (!creatorAPI.launch)
+                           {
+                               return;
+                           }
+
+                           int num2 = createType == CreatorMain.CreateType.Y ? (typeBool ? Start.Y + End.Y - y : y) : (typeBool ? y : Start.Y + End.Y - y);
+                           int contents = Terrain.ExtractContents(createType != CreatorMain.CreateType.X ? (createType != CreatorMain.CreateType.Y ? subsystemTerrain.Terrain.GetCellValueFast(x, z, num2) : subsystemTerrain.Terrain.GetCellValueFast(x, num2, z)) : subsystemTerrain.Terrain.GetCellValueFast(num2, x, z));
+                           if (!(flag2 & limit) || contents == 0)
+                           {
+                               if (!flag1 && contents != 0)
+                               {
+                                   flag1 = true;
+                               }
+                               else if (flag1 && contents == 0)
+                               {
+                                   flag2 = true;
+                                   if (createType == CreatorMain.CreateType.X)
+                                   {
+                                       creatorAPI.CreateBlock(num2, x, z, blockIconWidget.Value, chunkData);
+                                       ++num1;
+                                   }
+                                   else if (createType == CreatorMain.CreateType.Y)
+                                   {
+                                       creatorAPI.CreateBlock(x, num2, z, blockIconWidget.Value, chunkData);
+                                       ++num1;
+                                   }
+                                   else
+                                   {
+                                       creatorAPI.CreateBlock(x, z, num2, blockIconWidget.Value, chunkData);
+                                       ++num1;
+                                   }
+                               }
+                           }
+                           else
+                           {
+                               break;
+                           }
+                       }
+                   }
+               }
+               chunkData.Render();
+               switch (CreatorAPI.Language)
+               {
+                   case Language.zh_CN:
+                       player.ComponentGui.DisplaySmallMessage(string.Format("操作成功，共生成{0}个方块", num1), Color.LightYellow, true, true);
+                       break;
+                   case Language.en_US:
+                       player.ComponentGui.DisplaySmallMessage(string.Format("The operation was successful, generating a total of {0} blocks", num1), Color.LightYellow, true, true);
+                       break;
+                   default:
+                       player.ComponentGui.DisplaySmallMessage(string.Format("操作成功，共生成{0}个方块", num1), Color.LightYellow, true, true);
+                       break;
+               }
+
+           });
+        }
+
+        public override void upDataButton(CreatorMain.CreateType createType, ButtonWidget button)
+        {
+            if (this.createType == createType)
+            {
+                if (typeBool)
+                {
+                    typeBool = false;
+                    switch (CreatorAPI.Language)
+                    {
+                        case Language.zh_CN:
+                            button.Text = "负" + getTypeName(createType) + "轴";
+                            break;
+                        case Language.en_US:
+                            button.Text = "- " + getTypeName(createType) + "-axis";
+                            break;
+                        default:
+                            button.Text = "负" + getTypeName(createType) + "轴";
+                            break;
+                    }
+
+                    button.Color = Color.Red;
+                }
+                else
+                {
+                    typeBool = true;
+                    switch (CreatorAPI.Language)
+                    {
+                        case Language.zh_CN:
+                            button.Text = "正" + getTypeName(createType) + "轴";
+                            break;
+                        case Language.en_US:
+                            button.Text = "+ " + getTypeName(createType) + "-axis";
+                            break;
+                        default:
+                            button.Text = "正" + getTypeName(createType) + "轴";
+                            break;
+                    }
+
+                    button.Color = Color.Green;
+                }
+            }
+            else
+            {
+                typeBool = true;
+                this.createType = createType;
+                switch (CreatorAPI.Language)
+                {
+                    case Language.zh_CN:
+                        button.Text = "正" + getTypeName(createType) + "轴";
+                        break;
+                    case Language.en_US:
+                        button.Text = "+ " + getTypeName(createType) + "-axis";
+                        break;
+                    default:
+                        button.Text = "正" + getTypeName(createType) + "轴";
+                        break;
+                }
+                button.Color = Color.Green;
+                if (X_Shaft != button)
+                {
+                    switch (CreatorAPI.Language)
+                    {
+                        case Language.zh_CN:
+                            X_Shaft.Text = "X轴";
+                            break;
+                        case Language.en_US:
+                            X_Shaft.Text = "X-axis";
+                            break;
+                        default:
+                            X_Shaft.Text = "X轴";
+                            break;
+                    }
+
+                    X_Shaft.Color = Color.White;
+                }
+                if (Y_Shaft != button)
+                {
+
+                    switch (CreatorAPI.Language)
+                    {
+                        case Language.zh_CN:
+                            X_Shaft.Text = "Y轴";
+                            break;
+                        case Language.en_US:
+                            X_Shaft.Text = "Y-axis";
+                            break;
+                        default:
+                            X_Shaft.Text = "Y轴";
+                            break;
+                    }
+                    Y_Shaft.Color = Color.White;
+                }
+                if (Z_Shaft == button)
+                {
+                    return;
+                }
+
+                switch (CreatorAPI.Language)
+                {
+                    case Language.zh_CN:
+                        X_Shaft.Text = "Z轴";
+                        break;
+                    case Language.en_US:
+                        X_Shaft.Text = "Z-axis";
+                        break;
+                    default:
+                        X_Shaft.Text = "Z轴";
+                        break;
+                }
+                Z_Shaft.Color = Color.White;
+            }
+        }
+    }
+}
