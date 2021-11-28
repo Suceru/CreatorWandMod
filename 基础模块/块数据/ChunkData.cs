@@ -1,10 +1,198 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: CreatorModAPI.ChunkData
-// Assembly: CreatorMod_Android, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: B7D80CF5-3F89-46A6-B943-D040364C2CEC
-// Assembly location: D:\Users\12464\Desktop\sc2\css\CreatorMod_Android.dll
+﻿using Engine;
+using Game;
+using System;
+using System.Collections.Generic;
 
-using Engine;
+namespace CreatorModAPI
+{
+    public class ChunkData
+    {
+        public class Chunk
+        {
+            public int chunkX;
+
+            public int chunkY;
+
+            public int[] Cells;
+
+            public Chunk(int chunkX, int chunkY)
+            {
+                this.chunkX = chunkX;
+                this.chunkY = chunkY;
+            }
+        }
+
+        public List<Chunk> chunksData = new List<Chunk>();
+
+        private readonly SubsystemTerrain subsystemTerrain;
+
+        private readonly CreatorAPI creatorAPI;
+
+        public ChunkData(CreatorAPI creatorAPI)
+        {
+            this.creatorAPI = creatorAPI;
+            subsystemTerrain = creatorAPI.componentMiner.Project.FindSubsystem<SubsystemTerrain>(throwOnError: true);
+        }
+
+        public Chunk CreateChunk(int x, int z, bool unLimited = false)
+        {
+            int chunkX = x >> 4;
+            int num = z >> 4;
+            TerrainChunk terrainChunk = subsystemTerrain.Terrain.GetChunkAtCoords(chunkX, num);
+            if (terrainChunk == null)
+            {
+                if (!unLimited)
+                {
+                    return null;
+                }
+
+                terrainChunk = subsystemTerrain.Terrain.AllocateChunk(chunkX, num);
+                while (terrainChunk.ThreadState < TerrainChunkState.Valid)
+                {
+                    subsystemTerrain.TerrainUpdater.UpdateChunkSingleStep(terrainChunk, 15);
+                }
+            }
+
+            Chunk chunk = new Chunk(chunkX, num)
+            {
+                Cells = new int[terrainChunk.Cells.Length]
+            };
+            for (int i = 0; i < terrainChunk.Cells.Length; i++)
+            {
+                chunk.Cells[i] = terrainChunk.Cells[i];
+            }
+
+            chunksData.Add(chunk);
+            return chunk;
+        }
+
+        public int GetCellValueFast(int x, int y, int z)
+        {
+            int num = x >> 4;
+            int num2 = z >> 4;
+            Chunk chunk = null;
+            foreach (Chunk chunksDatum in chunksData)
+            {
+                if (chunksDatum.chunkX == num && chunksDatum.chunkY == num2)
+                {
+                    chunk = chunksDatum;
+                    break;
+                }
+            }
+
+            if (chunk == null)
+            {
+                return 0;
+            }
+
+            return chunk.Cells[y + (x & 0xF) * 256 + (z & 0xF) * 256 * 16];
+        }
+
+        public Chunk GetChunk(int x, int z)
+        {
+            int num = x >> 4;
+            int num2 = z >> 4;
+            foreach (Chunk chunksDatum in chunksData)
+            {
+                if (chunksDatum.chunkX == num && chunksDatum.chunkY == num2)
+                {
+                    return chunksDatum;
+                }
+            }
+
+            return null;
+        }
+
+        public virtual void SetBlock(int x, int y, int z, int value)
+        {
+            try
+            {
+                int num;
+                Chunk chunk;
+                if (y >= 0 && y < 256)
+                {
+                    num = y + (x & 0xF) * 256 + (z & 0xF) * 256 * 16;
+                    chunk = GetChunk(x, z);
+                    if (chunk != null)
+                    {
+                        goto IL_004e;
+                    }
+
+                    chunk = CreateChunk(x, z, creatorAPI.UnLimitedOfCreate);
+                    if (chunk != null)
+                    {
+                        goto IL_004e;
+                    }
+                }
+
+                goto end_IL_0000;
+            IL_004e:
+                if (num < chunk.Cells.Length)
+                {
+                    chunk.Cells[num] = value;
+                }
+
+            end_IL_0000:;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(CreatorMain.Display_Key_Dialog("chunkDataErr") + ex.Message);
+            }
+        }
+
+        public virtual void SetBlock(Point3 point3, int value)
+        {
+            SetBlock(point3.X, point3.Y, point3.Z, value);
+        }
+
+        public virtual void Render()
+        {
+            foreach (Chunk chunksDatum in chunksData)
+            {
+                TerrainChunk terrainChunk = subsystemTerrain.Terrain.GetChunkAtCoords(chunksDatum.chunkX, chunksDatum.chunkY);
+                if (terrainChunk == null)
+                {
+                    if (!creatorAPI.UnLimitedOfCreate)
+                    {
+                        continue;
+                    }
+
+                    terrainChunk = subsystemTerrain.Terrain.AllocateChunk(chunksDatum.chunkX, chunksDatum.chunkY);
+                }
+
+                for (int i = 0; i < terrainChunk.Cells.Length; i++)
+                {
+                    terrainChunk.Cells[i] = chunksDatum.Cells[i];
+                }
+
+                terrainChunk.ModificationCounter++;
+                if (creatorAPI.UnLimitedOfCreate)
+                {
+                    terrainChunk.State = TerrainChunkState.Valid;
+                }
+
+                if (terrainChunk.State > TerrainChunkState.InvalidLight)
+                {
+                    terrainChunk.State = TerrainChunkState.InvalidLight;
+                }
+
+                terrainChunk.WasDowngraded = true;
+            }
+
+            if (this != creatorAPI.revokeData)
+            {
+                chunksData.Clear();
+            }
+        }
+
+        public void Clear()
+        {
+            chunksData.Clear();
+        }
+    }
+}
+
+/*using Engine;
 using Game;
 using System;
 using System.Collections.Generic;
@@ -114,7 +302,7 @@ namespace CreatorModAPI
             {
 
                 Log.Error(CreatorMain.Display_Key_Dialog("chunkDataErr") + ex.Message);
-                /*   switch (CreatorAPI.Language)
+                *//*   switch (CreatorAPI.Language)
                    {
                        case Language.zh_CN:
                            Log.Error("缓存生成发生错误:" + ex.Message);
@@ -125,7 +313,7 @@ namespace CreatorModAPI
                        default:
                            Log.Error("缓存生成发生错误:" + ex.Message);
                            break;
-                   }*/
+                   }*//*
 
             }
         }
@@ -190,3 +378,4 @@ namespace CreatorModAPI
         }
     }
 }
+*/

@@ -1,11 +1,70 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: CreatorModAPI.PrismColumnDialog
-// Assembly: CreatorMod_Android, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: B7D80CF5-3F89-46A6-B943-D040364C2CEC
-// Assembly location: D:\Users\12464\Desktop\sc2\css\CreatorMod_Android.dll
+﻿using Engine;
+using Game;
+using System.Threading.Tasks;
 
+namespace CreatorModAPI
+{
+    public class PrismColumnDialog : PillarsDialog
+    {
+        public PrismColumnDialog(CreatorAPI creatorAPI)
+            : base(creatorAPI)
+        {
+            ((FontTextWidget)Children.Find<LabelWidget>("Name")).set_Text(CreatorMain.Display_Key_Dialog("pcddialog1"));
+        }
+
+        public override void upClickButton(int id)
+        {
+            if (SoildButton.IsClicked)
+            {
+                Task.Run(delegate
+                {
+                    int num2 = 0;
+                    ChunkData chunkData2 = new ChunkData(creatorAPI);
+                    creatorAPI.revokeData = new ChunkData(creatorAPI);
+                    foreach (Point3 item in creatorAPI.creatorGenerationAlgorithm.PrismColumn(creatorAPI.Position[0], (int)Radius.Value, (int)Height.Value, createType, typeBool))
+                    {
+                        creatorAPI.CreateBlock(item, id, chunkData2);
+                        num2++;
+                        if (!creatorAPI.launch)
+                        {
+                            return;
+                        }
+                    }
+
+                    player.ComponentGui.DisplaySmallMessage(string.Format(CreatorMain.Display_Key_Dialog("filldialog1"), num2), Color.LightYellow, blinking: true, playNotificationSound: true);
+                });
+                DialogsManager.HideDialog(this);
+            }
+
+            if (!HollowButton.IsClicked)
+            {
+                return;
+            }
+
+            Task.Run(delegate
+            {
+                int num = 0;
+                ChunkData chunkData = new ChunkData(creatorAPI);
+                creatorAPI.revokeData = new ChunkData(creatorAPI);
+                foreach (Point3 item2 in creatorAPI.creatorGenerationAlgorithm.PrismColumn(creatorAPI.Position[0], (int)Radius.Value, (int)Height.Value, createType, typeBool, Hollow: true))
+                {
+                    creatorAPI.CreateBlock(item2, id, chunkData);
+                    num++;
+                    if (!creatorAPI.launch)
+                    {
+                        return;
+                    }
+                }
+
+                chunkData.Render();
+                player.ComponentGui.DisplaySmallMessage(string.Format(CreatorMain.Display_Key_Dialog("filldialog1"), num), Color.LightYellow, blinking: true, playNotificationSound: true);
+            });
+            DialogsManager.HideDialog(this);
+        }
+    }
+}
 /*棱柱生成*/
-/*namespace CreatorModAPI-=  public class PrismColumnDialog : PillarsDialog*/
+/*namespace CreatorModAPI-=  public class PrismColumnDialog : PillarsDialog*//*
 using Engine;
 using Game;
 using System.Threading.Tasks;
@@ -71,3 +130,4 @@ namespace CreatorModAPI
         }
     }
 }
+*/
