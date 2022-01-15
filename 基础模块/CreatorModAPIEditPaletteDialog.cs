@@ -2,13 +2,13 @@
 using GameEntitySystem;
 using TemplatesDatabase;
 
-namespace CreatorModAPI
+namespace CreatorWandModAPI
 {
-    public class CreatorModAPIEditPaletteDialog : EditPaletteDialog
+    public class CreatorWandModAPIEditPaletteDialog : EditPaletteDialog
     {
         private readonly ButtonWidget okButton;
 
-        public CreatorModAPIEditPaletteDialog(WorldPalette palette)
+        public CreatorWandModAPIEditPaletteDialog(WorldPalette palette)
             : base(palette)
         {
             okButton = Children.Find<ButtonWidget>("EditPaletteDialog.OK");
@@ -24,29 +24,3 @@ namespace CreatorModAPI
         }
     }
 }
-
-/*using Game;
-
-namespace CreatorModAPI
-{
-    public class CreatorModAPIEditPaletteDialog : EditPaletteDialog
-    {
-        private readonly ButtonWidget okButton;
-
-        public CreatorModAPIEditPaletteDialog(WorldPalette palette)
-          : base(palette)
-          => okButton = Children.Find<ButtonWidget>("EditPaletteDialog.OK");
-
-        public override void Update()
-        {
-            base.Update();
-            if (!okButton.IsClicked)
-            {
-                return;
-            }
-
-            GameManager.Project.FindSubsystem<SubsystemPalette>().Load(null);
-        }
-    }
-}
-*/

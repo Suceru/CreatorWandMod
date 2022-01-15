@@ -1,6 +1,6 @@
 ﻿using Engine;
 
-namespace CreatorModAPI
+namespace CreatorWandModAPI
 {
     public static class MirrorBlockBehavior
     {
@@ -23,57 +23,3 @@ namespace CreatorModAPI
         }
     }
 }
-/*using Engine;
-
-namespace CreatorModAPI
-{
-    public static class MirrorBlockBehavior
-    {
-        public static bool IsMirror;
-
-        public static void ChangeIsMirror()
-        {
-            if (IsMirror)
-            {
-                IsMirror = false;
-            }
-            else
-            {
-                IsMirror = true;
-            }
-        }
-
-        public static void Preview(CreatorAPI creatorAPI, ref Point3 Start, ref Point3 End)
-        {
-        }
-    }
-}*/
-
-/*using Engine;
-
-namespace CreatorModAPI
-{
-    public static class MirrorBlockBehavior
-    {
-        // static Point3 PreStart, PreEnd;
-        public static bool IsMirror = false;
-        public static void ChangeIsMirror()
-        {
-            if (IsMirror)
-            {
-                IsMirror = false;
-            }
-            else
-            {
-                IsMirror = true;
-            }
-        }
-        public static void Preview(CreatorAPI creatorAPI, ref Point3 Start, ref Point3 End)
-        {
-            *//*  CPPreview.PreStart = Start;
-              CPPreview.PreEnd = End;
-          *//*
-        }
-    }
-}
-*/

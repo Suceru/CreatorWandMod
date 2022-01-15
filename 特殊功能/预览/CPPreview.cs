@@ -1,6 +1,6 @@
 ﻿/*using Engine;
 
-namespace CreatorModAPI
+namespace CreatorWandModAPI
 {
     public static class CPPreview
     {

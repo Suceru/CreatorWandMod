@@ -1,4 +1,4 @@
-﻿using CreatorModAPI;
+﻿using CreatorWandModAPI;
 using Engine;
 using Game;
 using GameEntitySystem;

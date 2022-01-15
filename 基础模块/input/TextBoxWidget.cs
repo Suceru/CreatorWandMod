@@ -5,7 +5,7 @@ using Engine.Media;
 using Game;
 using System;
 
-namespace CreatorModAPI
+namespace CreatorWandModAPI
 {
     public class TextBoxWidget : Widget
     {

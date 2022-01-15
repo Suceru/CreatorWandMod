@@ -1,4 +1,4 @@
-﻿namespace CreatorModAPI
+﻿namespace CreatorWandModAPI
 {
     public enum CreatorTerrainType
     {
