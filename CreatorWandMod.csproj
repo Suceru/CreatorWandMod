@@ -46,15 +46,15 @@
   <ItemGroup>
     <Reference Include="Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Game\Engine.dll</HintPath>
+      <HintPath>Dlls\1.33\Engine.dll</HintPath>
     </Reference>
     <Reference Include="EntitySystem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Game\EntitySystem.dll</HintPath>
+      <HintPath>Dlls\1.33\EntitySystem.dll</HintPath>
     </Reference>
     <Reference Include="Survivalcraft, Version=2.2.40.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Game\Survivalcraft.exe</HintPath>
+      <HintPath>Dlls\1.33\Survivalcraft.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.IO.Compression.FileSystem" />
@@ -133,6 +133,7 @@
     <Compile Include="基础模块\Terrain\CreatorTerrainType.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Dlls\1.33\" />
     <Folder Include="基础模块\Widget\" />
   </ItemGroup>
   <ItemGroup>
