@@ -24,9 +24,9 @@ namespace CreatorModAPI
         {
             this.creatorAPI = creatorAPI;
             player = creatorAPI.componentMiner.ComponentPlayer;
-            XElement node = ContentManager.Get<XElement>("Dialog/EditChunk", (string)null);
+            XElement node = ContentManager.Get<XElement>("Dialog/EditChunk");
             LoadChildren(this, node);
-            ((FontTextWidget)Children.Find<LabelWidget>("EditingChunk")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "EditChunk", "EditingChunk"));
+            (Children.Find<LabelWidget>("EditingChunk")).Text = (CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "EditChunk", "EditingChunk"));
             SliderData = Children.Find<LabelWidget>("Slider Data");
             TemperatureSlider = Children.Find<SliderWidget>("Slider 1");
             TemperatureSlider.Value = (GameManager.Project.FindSubsystem<SubsystemTerrain>(throwOnError: true).Terrain.GetTemperature(this.creatorAPI.Position[0].X, this.creatorAPI.Position[0].Z) + GameManager.Project.FindSubsystem<SubsystemTerrain>(throwOnError: true).Terrain.GetTemperature(this.creatorAPI.Position[1].X, this.creatorAPI.Position[1].Z)) / 2;
@@ -82,7 +82,7 @@ namespace CreatorModAPI
                 DialogsManager.HideDialog(this);
             }
 
-            ((FontTextWidget)SliderData).Text=(string.Format(CreatorMain.Display_Key_Dialog("editchunkdialog3"), (int)TemperatureSlider.Value, (int)HumiditySlider.Value));
+            (SliderData).Text = (string.Format(CreatorMain.Display_Key_Dialog("editchunkdialog3"), (int)TemperatureSlider.Value, (int)HumiditySlider.Value));
         }
     }
 }

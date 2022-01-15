@@ -21,11 +21,11 @@ namespace CreatorModAPI
             base.creatorAPI = creatorAPI;
             player = creatorAPI.componentMiner.ComponentPlayer;
             subsystemTerrain = player.Project.FindSubsystem<SubsystemTerrain>(throwOnError: true);
-            XElement node = ContentManager.Get<XElement>("Dialog/Octahedron", (string)null);
+            XElement node = ContentManager.Get<XElement>("Dialog/Octahedron");
             LoadChildren(this, node);
             GeneralSet();
             Children.Find<StackPanelWidget>("XYZ").IsVisible = false;
-            ((FontTextWidget)Children.Find<LabelWidget>("Name")).Text=(CreatorMain.Display_Key_Dialog("pyddialog1"));
+            (Children.Find<LabelWidget>("Name")).Text = (CreatorMain.Display_Key_Dialog("pyddialog1"));
             Radius = Children.Find<SliderWidget>("Slider");
             delayLabel = Children.Find<LabelWidget>("Slider data");
             SoildButton = Children.Find<ButtonWidget>("Solid");
@@ -39,7 +39,7 @@ namespace CreatorModAPI
         public override void Update()
         {
             base.Update();
-            ((FontTextWidget)delayLabel).Text=(string.Format(CreatorMain.Display_Key_Dialog("pyddialog2"), (int)Radius.Value));
+            (delayLabel).Text = (string.Format(CreatorMain.Display_Key_Dialog("pyddialog2"), (int)Radius.Value));
             if (SoildButton.IsClicked)
             {
                 Task.Run(delegate

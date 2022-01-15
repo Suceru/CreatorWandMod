@@ -30,7 +30,7 @@ namespace CreatorModAPI
         {
             this.creatorAPI = creatorAPI;
             player = creatorAPI.componentMiner.ComponentPlayer;
-            XElement node = ContentManager.Get<XElement>("Dialog/替换界面", (string)null);
+            XElement node = ContentManager.Get<XElement>("Dialog/替换界面");
             LoadChildren(this, node);
             cancelButton = Children.Find<ButtonWidget>("取消");
             replaceButton = Children.Find<ButtonWidget>("替换");

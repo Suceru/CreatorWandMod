@@ -1,4 +1,5 @@
-﻿using Engine;
+﻿
+using Engine;
 using Game;
 using System;
 using System.Collections.Generic;
@@ -227,16 +228,20 @@ namespace CreatorModAPI
             return stackPanelWidget;
         }
 
+        //侧边按钮
         public Widget makeFuncButton(string txt, Action func)
         {
-            return new ClickTextWidget(new Vector2(40f), txt, func, box: true)
+            return new ClickTextWidget(new Vector2(50f, 40f), txt, func, box: true)
             {
-                BorderColor = Color.White,
-                Margin = new Vector2(2f),
+                BackGround = Color.White,
+                Margin = new Vector2(5f, 2f),
                 labelWidget =
                 {
-                    FontScale = ((txt.Length > 1) ? 0.7f : 1f),
-                    Color = Color.White
+                    FontScale = 1f,
+                    Color = Color.Black,
+                    ColorTransform = Color.Yellow
+
+
                 }
             };
         }
@@ -350,7 +355,8 @@ namespace CreatorModAPI
                             }));
                             break;
                         case 16:
-                            stackPanelWidget2.Children.Add(makeFuncButton(LanguageControl.GetContentWidgets(GetType().Name, 1), delegate
+
+                            stackPanelWidget2.Children.Add(makeFuncButton("Clr", delegate
                             {
                                 AudioManager.PlaySound("Audio/UI/ButtonClick", 1f, 0f, 0f);
                                 for (int l = 0; l < Data.Count; l++)
@@ -362,7 +368,7 @@ namespace CreatorModAPI
                             }));
                             break;
                         case 17:
-                            stackPanelWidget2.Children.Add(makeFuncButton(LanguageControl.GetContentWidgets(GetType().Name, 2), delegate
+                            stackPanelWidget2.Children.Add(makeFuncButton("Trl", delegate
                             {
                                 AudioManager.PlaySound("Audio/UI/ButtonClick", 1f, 0f, 0f);
                                 DynamicArray<byte> dynamicArray = new DynamicArray<byte>();
@@ -400,7 +406,7 @@ namespace CreatorModAPI
                 LoadString(textBoxWidget.Text);
                 isclick = true;
             }, memory.SaveString(saveLastOutput: false)));
-            stackPanelWidget.Children.Add(makeButton(LanguageControl.GetContentWidgets(GetType().Name, 4), delegate
+            stackPanelWidget.Children.Add(makeButton("OK", delegate
             {
                 for (int k = 0; k < Data.Count; k++)
                 {
@@ -411,7 +417,7 @@ namespace CreatorModAPI
                 AudioManager.PlaySound("Audio/UI/ButtonClick", 1f, 0f, 0f);
                 DialogsManager.HideDialog(this);
             }));
-            stackPanelWidget.Children.Add(makeButton(LanguageControl.GetContentWidgets(GetType().Name, 5), delegate
+            stackPanelWidget.Children.Add(makeButton("Cancel", delegate
             {
                 AudioManager.PlaySound("Audio/UI/ButtonClick", 1f, 0f, 0f);
                 DialogsManager.HideDialog(this);
@@ -426,6 +432,7 @@ namespace CreatorModAPI
             {
                 HorizontalAlignment = WidgetAlignment.Center
             };
+            //text条
             RectangleWidget widget = new RectangleWidget
             {
                 FillColor = Color.Black,
@@ -457,12 +464,23 @@ namespace CreatorModAPI
         {
             return new ClickTextWidget(new Vector2(120f, 30f), txt, tas)
             {
-                BorderColor = Color.White,
+                /*rectangleWidget = new RectangleWidget
+                {
+                    FillColor = Color.Gray,
+                    OutlineColor = Color.Transparent,
+                    OutlineThickness = 1f,
+                },*/
+                BackGround = Color.Gray,
+
+                /*ColorTransform = Color.White,
+                BackGround = Color.White,*/
                 Margin = new Vector2(0f, 3f),
                 labelWidget =
                 {
-                    FontScale = 0.7f,
+                   
+                    //FontScale = 0.7f,
                     Color = Color.Green
+
                 }
             };
         }
@@ -476,7 +494,7 @@ namespace CreatorModAPI
 
             if (isSetPos)
             {
-                list[clickpos].BorderColor = Color.Red;
+                list[clickpos].BackGround = Color.Green;
             }
             else
             {
@@ -489,13 +507,15 @@ namespace CreatorModAPI
                 {
                     if (i == clickpos)
                     {
-                        list[i].BorderColor = Color.Yellow;
+                        list[i].ColorTransform = Color.Yellow;
                         //q-in
                         Led_SetColor(i);
                     }
                     else
                     {
-                        list[i].BorderColor = Color.Transparent;
+                        list[i].ColorTransform = Color.White;
+                        list[i].BackGround = Color.Transparent;
+
                     }
 
                     list[i].labelWidget.Text = $"{MemoryBankData.m_hexChars[Read(i)]}";

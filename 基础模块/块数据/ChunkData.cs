@@ -126,13 +126,13 @@ namespace CreatorModAPI
                 }
 
                 goto end_IL_0000;
-            IL_004e:
+IL_004e:
                 if (num < chunk.Cells.Length)
                 {
                     chunk.Cells[num] = value;
                 }
 
-            end_IL_0000:;
+end_IL_0000:;
             }
             catch (Exception ex)
             {

@@ -25,7 +25,7 @@ namespace CreatorModAPI
         public SetModeDialog(CreatorAPI creatorAPI)
         {
             player = creatorAPI.componentMiner.ComponentPlayer;
-            XElement node = ContentManager.Get<XElement>("Dialog/GameMode", (string)null);
+            XElement node = ContentManager.Get<XElement>("Dialog/GameMode");
             LoadChildren(this, node);
             CreativeButton = Children.Find<ButtonWidget>("Creative");
             CreativeButton.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "GameMode", "Creative");

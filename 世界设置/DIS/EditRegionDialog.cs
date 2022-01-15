@@ -26,7 +26,7 @@ namespace CreatorModAPI
         {
             this.creatorAPI = creatorAPI;
             player = creatorAPI.componentMiner.ComponentPlayer;
-            XElement node = ContentManager.Get<XElement>("Dialog/编辑区域", (string)null);
+            XElement node = ContentManager.Get<XElement>("Dialog/编辑区域");
             LoadChildren(this, node);
             SliderData = Children.Find<LabelWidget>("滑条数据");
             TemperatureSlider = Children.Find<SliderWidget>("滑条1");
@@ -72,7 +72,7 @@ namespace CreatorModAPI
                 DialogsManager.HideDialog(this);
             }
 
-            ((FontTextWidget)SliderData).Text=(string.Format(CreatorMain.Display_Key_Dialog("editchunkdialog3"), (int)TemperatureSlider.Value, (int)HumiditySlider.Value));
+            (SliderData).Text = (string.Format(CreatorMain.Display_Key_Dialog("editchunkdialog3"), (int)TemperatureSlider.Value, (int)HumiditySlider.Value));
         }
     }
 }

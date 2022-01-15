@@ -31,7 +31,7 @@ namespace CreatorModAPI
 
         private readonly ComponentPlayer player;
 
-        private Regex Regex;
+        // private Regex Regex;
 
         public TransferDialog(CreatorAPI creatorAPI)
         {
@@ -67,12 +67,12 @@ namespace CreatorModAPI
             };
             player = creatorAPI.componentMiner.ComponentPlayer;
             subsystemTerrain = player.Project.FindSubsystem<SubsystemTerrain>(throwOnError: true);
-            XElement node = ContentManager.Get<XElement>("Dialog/Teleport", (string)null);
+            XElement node = ContentManager.Get<XElement>("Dialog/Teleport");
             LoadChildren(this, node);
-            ((FontTextWidget)Children.Find<LabelWidget>("Teleport")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Teleport", "Teleport"));
-            ((FontTextWidget)Children.Find<LabelWidget>("X:")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Teleport", "X:"));
-            ((FontTextWidget)Children.Find<LabelWidget>("Y:")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Teleport", "Y:"));
-            ((FontTextWidget)Children.Find<LabelWidget>("Z:")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Teleport", "Z:"));
+            (Children.Find<LabelWidget>("Teleport")).Text = (CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Teleport", "Teleport"));
+            (Children.Find<LabelWidget>("X:")).Text = (CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Teleport", "X:"));
+            (Children.Find<LabelWidget>("Y:")).Text = (CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Teleport", "Y:"));
+            (Children.Find<LabelWidget>("Z:")).Text = (CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Teleport", "Z:"));
             Children.Add(P1, P2, P3, P4, Spawn);
             cancelButton = Children.Find<ButtonWidget>("Cancel");
             cancelButton.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Teleport", "Cancel");
@@ -81,7 +81,7 @@ namespace CreatorModAPI
             X = Children.Find<Game.TextBoxWidget>("X");
             Y = Children.Find<Game.TextBoxWidget>("Y");
             Z = Children.Find<Game.TextBoxWidget>("Z");
-            Regex = new Regex("[^0-9]+");
+            //Regex = new Regex("^-?[1-9]\\d*$");//"[^0-9]+");^-?[1-9]\d*$
             X.Text = ((int)player.ComponentBody.Position.X).ToString();
             Y.Text = ((int)player.ComponentBody.Position.Y).ToString();
             Z.Text = ((int)player.ComponentBody.Position.Z).ToString();
@@ -96,9 +96,9 @@ namespace CreatorModAPI
         {
             if (X.IsHitTestVisible || Y.IsHitTestVisible || Z.IsHitTestVisible)
             {
-                X.Text = Regex.Replace(X.Text, "");
-                Y.Text = Regex.Replace(Y.Text, "");
-                Z.Text = Regex.Replace(Z.Text, "");
+                X.Text = X.Text;// Regex.Replace(X.Text, "");
+                Y.Text = Y.Text;// Regex.Replace(Y.Text, "");
+                Z.Text = Z.Text;//Regex.Replace(Z.Text, "");
             }
 
             if (Spawn.IsClicked)

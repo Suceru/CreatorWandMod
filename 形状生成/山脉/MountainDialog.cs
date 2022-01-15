@@ -36,9 +36,9 @@ namespace CreatorModAPI
         {
             this.creatorAPI = creatorAPI;
             player = creatorAPI.componentMiner.ComponentPlayer;
-            XElement node = ContentManager.Get<XElement>("Dialog/Mountains", (string)null);
+            XElement node = ContentManager.Get<XElement>("Dialog/Mountains");
             LoadChildren(this, node);
-            ((FontTextWidget)Children.Find<LabelWidget>("Mountains")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Mountains", "Mountains"));
+            (Children.Find<LabelWidget>("Mountains")).Text = (CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Mountains", "Mountains"));
             OK = Children.Find<ButtonWidget>("OK");
             OK.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Mountains", "OK");
             cancelButton = Children.Find<ButtonWidget>("Cancel");
@@ -58,9 +58,9 @@ namespace CreatorModAPI
 
         public override void Update()
         {
-            ((FontTextWidget)num_1).Text=(string.Format(CreatorMain.Display_Key_Dialog("moundialog1"), (int)num1.Value));
-            ((FontTextWidget)num_2).Text=(string.Format(CreatorMain.Display_Key_Dialog("moundialog2"), (int)num2.Value));
-            ((FontTextWidget)num_3).Text=(string.Format(CreatorMain.Display_Key_Dialog("moundialog3"), (int)num3.Value));
+            (num_1).Text = (string.Format(CreatorMain.Display_Key_Dialog("moundialog1"), (int)num1.Value));
+            (num_2).Text = (string.Format(CreatorMain.Display_Key_Dialog("moundialog2"), (int)num2.Value));
+            (num_3).Text = (string.Format(CreatorMain.Display_Key_Dialog("moundialog3"), (int)num3.Value));
             if (restting.IsClicked)
             {
                 num1.Value = 0f;

@@ -79,9 +79,9 @@ namespace CreatorModAPI
                     18
                 }, 72f, delegate (object index)
                 {
-                    ContainerWidget obj2 = (ContainerWidget)Widget.LoadWidget(null, ContentManager.Get<XElement>("Widgets/SelectBlockItem", (string)null), null);
+                    ContainerWidget obj2 = (ContainerWidget)Widget.LoadWidget(null, ContentManager.Get<XElement>("Widgets/SelectBlockItem"), null);
                     obj2.Children.Find<BlockIconWidget>("SelectBlockItem.Block").Contents = (int)index;
-                    ((FontTextWidget)obj2.Children.Find<LabelWidget>("SelectBlockItem.Text")).Text=BlocksManager.Blocks[(int)index].GetDisplayName(null, Terrain.MakeBlockValue((int)index));
+                    (obj2.Children.Find<LabelWidget>("SelectBlockItem.Text")).Text = BlocksManager.Blocks[(int)index].GetDisplayName(null, Terrain.MakeBlockValue((int)index));
                     return obj2;
                 }, delegate (object index)
                 {

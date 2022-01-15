@@ -21,9 +21,9 @@ namespace CreatorModAPI
             public PasswordDialog(ComponentPlayer player)
             {
                 this.player = player;
-                XElement node = ContentManager.Get<XElement>("Dialog/Manager3", (string)null);
+                XElement node = ContentManager.Get<XElement>("Dialog/Manager3");
                 LoadChildren(this, node);
-                ((FontTextWidget)Children.Find<LabelWidget>("Name")).Text=CreatorMain.Display_Key_Dialog("setdialopass");
+                (Children.Find<LabelWidget>("Name")).Text = CreatorMain.Display_Key_Dialog("setdialopass");
                 cancelButton = Children.Find<ButtonWidget>("Cancel");
                 cancelButton.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Manager3", "Cancel");
                 OK = Children.Find<ButtonWidget>("OK");
@@ -92,7 +92,7 @@ namespace CreatorModAPI
             this.creatorAPI = creatorAPI;
             player = creatorAPI.componentMiner.ComponentPlayer;
             subsystemTerrain = player.Project.FindSubsystem<SubsystemTerrain>(throwOnError: true);
-            XElement node = ContentManager.Get<XElement>("Dialog/ModSettings", (string)null);
+            XElement node = ContentManager.Get<XElement>("Dialog/ModSettings");
             LoadChildren(this, node);
             OK = Children.Find<ButtonWidget>("OK");
             OK.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "ModSettings", "OK");

@@ -1,6 +1,6 @@
 ﻿using Engine;
 using Game;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace CreatorModAPI
@@ -19,10 +19,10 @@ namespace CreatorModAPI
             base.creatorAPI = creatorAPI;
             player = creatorAPI.componentMiner.ComponentPlayer;
             subsystemTerrain = player.Project.FindSubsystem<SubsystemTerrain>(throwOnError: true);
-            XElement node = ContentManager.Get<XElement>("Dialog/Cuboid", (string)null);
+            XElement node = ContentManager.Get<XElement>("Dialog/Cuboid");
             LoadChildren(this, node);
             GeneralSet();
-            ((FontTextWidget)Children.Find<LabelWidget>("Cuboid")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Cuboid", "Cuboid"));
+            (Children.Find<LabelWidget>("Cuboid")).Text = (CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Cuboid", "Cuboid"));
             SoildButton = Children.Find<ButtonWidget>("Solid");
             SoildButton.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Cuboid", "Solid");
             HollowButton = Children.Find<ButtonWidget>("Hollow");
@@ -38,77 +38,90 @@ namespace CreatorModAPI
             base.Update();
             if (SoildButton.IsClicked)
             {
-                Task.Run(delegate
+                try
                 {
-                    ChunkData chunkData3 = new ChunkData(creatorAPI);
-                    creatorAPI.revokeData = new ChunkData(creatorAPI);
-                    int num3 = 0;
-                    foreach (Point3 item in creatorAPI.creatorGenerationAlgorithm.Rectangular(creatorAPI.Position[0], creatorAPI.Position[1]))
+                    System.Threading.Tasks.Task.Run(() =>
                     {
-                        if (!creatorAPI.launch)
-                        {
-                            return;
-                        }
+                        int a = blockIconWidget.Value;
+                        int num2 = CreatorWand2.CW2Cuboid.GeometryCuboid(creatorAPI.Position[0], creatorAPI.Position[1], a);
+                        player.ComponentGui.DisplaySmallMessage(string.Format(CreatorMain.Display_Key_Dialog("filldialog1"), num2), Color.LightYellow, blinking: true, playNotificationSound: true);
 
-                        creatorAPI.CreateBlock(item, blockIconWidget.Value, chunkData3);
-                        num3++;
-                    }
+                    });
+                }
+                catch (System.Exception e)
+                {
 
-                    chunkData3.Render();
+                    Log.Error("Err:" + e);
+                }
+
+
+                /*Task.Run(() =>
+                {
+                    int a = blockIconWidget.Value;
+                    int num3 = CreatorWand2.CW2Cuboid.GeometryCuboid(creatorAPI.Position[0], creatorAPI.Position[1], a);
                     player.ComponentGui.DisplaySmallMessage(string.Format(CreatorMain.Display_Key_Dialog("filldialog1"), num3), Color.LightYellow, blinking: true, playNotificationSound: true);
-                });
-                DialogsManager.HideDialog(this);
+                });*/
+                DialogsManager.HideAllDialogs();
             }
 
             if (HollowButton.IsClicked)
             {
-                Task.Run(delegate
+
+
+                try
                 {
-                    ChunkData chunkData2 = new ChunkData(creatorAPI);
-                    creatorAPI.revokeData = new ChunkData(creatorAPI);
-                    int num2 = 0;
-                    foreach (Point3 item2 in creatorAPI.creatorGenerationAlgorithm.Rectangular(creatorAPI.Position[0], creatorAPI.Position[1], true))
+                    System.Threading.Tasks.Task.Run(() =>
                     {
-                        if (!creatorAPI.launch)
-                        {
-                            return;
-                        }
+                        int a = blockIconWidget.Value;
+                        int num2 = CreatorWand2.CW2Cuboid.GeometryBox(creatorAPI.Position[0], creatorAPI.Position[1], a);
+                        player.ComponentGui.DisplaySmallMessage(string.Format(CreatorMain.Display_Key_Dialog("filldialog1"), num2), Color.LightYellow, blinking: true, playNotificationSound: true);
 
-                        creatorAPI.CreateBlock(item2, blockIconWidget.Value, chunkData2);
-                        num2++;
-                    }
-
-                    chunkData2.Render();
-                    player.ComponentGui.DisplaySmallMessage(string.Format(CreatorMain.Display_Key_Dialog("filldialog1"), num2), Color.LightYellow, blinking: true, playNotificationSound: true);
-                });
-                DialogsManager.HideDialog(this);
-            }
-
-            if (!FrameworkButton.IsClicked)
-            {
-                return;
-            }
-
-            Task.Run(delegate
-            {
-                ChunkData chunkData = new ChunkData(creatorAPI);
-                creatorAPI.revokeData = new ChunkData(creatorAPI);
-                int num = 0;
-                foreach (Point3 item3 in creatorAPI.creatorGenerationAlgorithm.Rectangular(creatorAPI.Position[0], creatorAPI.Position[1], false))
+                    });
+                }
+                catch (System.Exception e)
                 {
-                    if (!creatorAPI.launch)
-                    {
-                        return;
-                    }
 
-                    creatorAPI.CreateBlock(item3, blockIconWidget.Value, chunkData);
-                    num++;
+                    Log.Error("Err:" + e);
                 }
 
-                chunkData.Render();
-                player.ComponentGui.DisplaySmallMessage(string.Format(CreatorMain.Display_Key_Dialog("filldialog1"), num), Color.LightYellow, blinking: true, playNotificationSound: true);
-            });
-            DialogsManager.HideDialog(this);
+                /*Task.Run(() =>
+                {
+                    int a = blockIconWidget.Value;
+                    int num2 = CreatorWand2.CW2Cuboid.GeometryBox(creatorAPI.Position[0], creatorAPI.Position[1], a);
+                    player.ComponentGui.DisplaySmallMessage(string.Format(CreatorMain.Display_Key_Dialog("filldialog1"), num2), Color.LightYellow, blinking: true, playNotificationSound: true);
+                });*/
+                DialogsManager.HideAllDialogs();
+            }
+
+            if (FrameworkButton.IsClicked)
+            {
+                try
+                {
+                    System.Threading.Tasks.Task.Run(() =>
+                    {
+                        int a = blockIconWidget.Value;
+                        int num2 = CreatorWand2.CW2Cuboid.GeometryEdge(creatorAPI.Position[0], creatorAPI.Position[1], a);
+                        player.ComponentGui.DisplaySmallMessage(string.Format(CreatorMain.Display_Key_Dialog("filldialog1"), num2), Color.LightYellow, blinking: true, playNotificationSound: true);
+                    });
+                }
+                catch (System.Exception e)
+                {
+
+                    Log.Error("Err:" + e);
+                }
+
+                /*Task.Run(() =>
+                {
+                    int a = blockIconWidget.Value;
+                    int num = CreatorWand2.CW2Cuboid.GeometryEdge(creatorAPI.Position[0], creatorAPI.Position[1], a);
+                    player.ComponentGui.DisplaySmallMessage(string.Format(CreatorMain.Display_Key_Dialog("filldialog1"), num), Color.LightYellow, blinking: true, playNotificationSound: true);
+                });*/
+                DialogsManager.HideAllDialogs();
+                //DialogsManager.HideDialog(this);
+
+            }
+
+
         }
     }
 }

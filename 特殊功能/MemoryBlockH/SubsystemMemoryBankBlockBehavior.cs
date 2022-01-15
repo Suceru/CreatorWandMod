@@ -5,7 +5,7 @@ namespace CreatorModAPI
 {
     public class SubsystemMemoryBankBlockBehavior1 : SubsystemMemoryBankBlockBehavior
     {
-        public static new string fName = "MemoryBankBlockBehavior";
+        public static string fName = "MemoryBankBlockBehavior";
 
         public override int[] HandledBlocks => new int[1]
         {
@@ -19,7 +19,7 @@ namespace CreatorModAPI
             int id = Terrain.ExtractData(value);
             MemoryBankData memoryBankData = GetItemData(id);
             memoryBankData = ((memoryBankData != null) ? ((MemoryBankData)memoryBankData.Copy()) : new MemoryBankData());
-            if (SettingsManager.UsePrimaryMemoryBank)
+            /*if (SettingsManager.UsePrimaryMemoryBank)
             {
                 DialogsManager.ShowDialog(componentPlayer.GuiWidget, new EditMemoryBankDialog(memoryBankData, delegate
                 {
@@ -29,7 +29,7 @@ namespace CreatorModAPI
                     inventory.AddSlotItems(slotIndex, value3, 1);
                 }));
             }
-            else
+            else*/
             {
                 DialogsManager.ShowDialog(componentPlayer.GuiWidget, new EditMemoryBankDialogAPI(memoryBankData, delegate
                 {
@@ -46,7 +46,7 @@ namespace CreatorModAPI
         public override bool OnEditBlock(int x, int y, int z, int value, ComponentPlayer componentPlayer)
         {
             MemoryBankData memoryBankData = GetBlockData(new Point3(x, y, z)) ?? new MemoryBankData();
-            if (SettingsManager.UsePrimaryMemoryBank)
+            /*if (SettingsManager.UsePrimaryMemoryBank)
             {
                 DialogsManager.ShowDialog(componentPlayer.GuiWidget, new EditMemoryBankDialog(memoryBankData, delegate
                 {
@@ -60,7 +60,7 @@ namespace CreatorModAPI
                     }
                 }));
             }
-            else
+            else*/
             {
                 DialogsManager.ShowDialog(componentPlayer.GuiWidget, new EditMemoryBankDialogAPI(memoryBankData, delegate
                 {

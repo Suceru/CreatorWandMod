@@ -21,11 +21,11 @@ namespace CreatorModAPI
             base.creatorAPI = creatorAPI;
             player = creatorAPI.componentMiner.ComponentPlayer;
             subsystemTerrain = player.Project.FindSubsystem<SubsystemTerrain>(throwOnError: true);
-            XElement node = ContentManager.Get<XElement>("Dialog/Octahedron", (string)null);
+            XElement node = ContentManager.Get<XElement>("Dialog/Octahedron");
             LoadChildren(this, node);
             GeneralSet();
             setShaftXYZ();
-            ((FontTextWidget)Children.Find<LabelWidget>("Name")).Text=(CreatorMain.Display_Key_Dialog("pddialog1"));
+            (Children.Find<LabelWidget>("Name")).Text = (CreatorMain.Display_Key_Dialog("pddialog1"));
             Radius = Children.Find<SliderWidget>("Slider");
             delayLabel = Children.Find<LabelWidget>("Slider data");
             Children.Find<ButtonWidget>("X-axis").Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Octahedron", "X-axis");
@@ -42,7 +42,7 @@ namespace CreatorModAPI
         public override void Update()
         {
             base.Update();
-            ((FontTextWidget)delayLabel).Text=(string.Format(CreatorMain.Display_Key_Dialog("pddialog2"), (int)Radius.Value));
+            (delayLabel).Text = (string.Format(CreatorMain.Display_Key_Dialog("pddialog2"), (int)Radius.Value));
             upDataButton();
             if (SoildButton.IsClicked)
             {

@@ -112,7 +112,7 @@ namespace CreatorModAPI
         public EditWorldDialog(CreatorAPI creatorAPI)
         {
             player = creatorAPI.componentMiner.ComponentPlayer;
-            XElement node = ContentManager.Get<XElement>("Dialog/EditWorld", (string)null);
+            XElement node = ContentManager.Get<XElement>("Dialog/EditWorld");
             LoadChildren(this, node);
             worldSettings = player.Project.FindSubsystem<SubsystemGameInfo>(throwOnError: true).WorldSettings;
             OKButton = Children.Find<ButtonWidget>("OK");
@@ -202,17 +202,17 @@ namespace CreatorModAPI
 
             Texture2D texture = blockTexturesCache.GetTexture(worldSettings.BlocksTextureName);
             blocksTextureIcon.Subtexture = new Subtexture(texture, Vector2.Zero, Vector2.One);
-            ((FontTextWidget)blocksTextureLabel).Text=(BlocksTexturesManager.GetDisplayName(worldSettings.BlocksTextureName));
-            ((FontTextWidget)blocksTextureDetails).Text=($"{texture.Width}x{texture.Height}");
+            (blocksTextureLabel).Text = (BlocksTexturesManager.GetDisplayName(worldSettings.BlocksTextureName));
+            (blocksTextureDetails).Text = ($"{texture.Width}x{texture.Height}");
             if (blocksTextureButton.IsClicked)
             {
                 BlocksTexturesManager.UpdateBlocksTexturesList();
                 DialogsManager.ShowDialog(null, new ListSelectionDialog("Select Blocks Texture", BlocksTexturesManager.BlockTexturesNames, 64f, delegate (object item)
                 {
-                    ContainerWidget obj2 = (ContainerWidget)Widget.LoadWidget(this, ContentManager.Get<XElement>("Widgets/BlocksTextureItem", (string)null), null);
+                    ContainerWidget obj2 = (ContainerWidget)Widget.LoadWidget(this, ContentManager.Get<XElement>("Widgets/BlocksTextureItem"), null);
                     Texture2D texture2 = blockTexturesCache.GetTexture((string)item);
-                    ((FontTextWidget)obj2.Children.Find<LabelWidget>("BlocksTextureItem.Text")).Text=(BlocksTexturesManager.GetDisplayName((string)item));
-                    ((FontTextWidget)obj2.Children.Find<LabelWidget>("BlocksTextureItem.Details")).Text=($"{texture2.Width}x{texture2.Height}");
+                    (obj2.Children.Find<LabelWidget>("BlocksTextureItem.Text")).Text = (BlocksTexturesManager.GetDisplayName((string)item));
+                    (obj2.Children.Find<LabelWidget>("BlocksTextureItem.Details")).Text = ($"{texture2.Width}x{texture2.Height}");
                     obj2.Children.Find<RectangleWidget>("BlocksTextureItem.Icon").Subtexture = new Subtexture(texture2, Vector2.Zero, Vector2.One);
                     return obj2;
                 }, delegate (object item)
@@ -341,9 +341,9 @@ namespace CreatorModAPI
                     0
                 }, 72f, delegate (object index)
                 {
-                    ContainerWidget obj = (ContainerWidget)Widget.LoadWidget(null, ContentManager.Get<XElement>("Widgets/SelectBlockItem", (string)null), null);
+                    ContainerWidget obj = (ContainerWidget)Widget.LoadWidget(null, ContentManager.Get<XElement>("Widgets/SelectBlockItem"), null);
                     obj.Children.Find<BlockIconWidget>("SelectBlockItem.Block").Contents = (int)index;
-                    ((FontTextWidget)obj.Children.Find<LabelWidget>("SelectBlockItem.Text")).Text=(BlocksManager.Blocks[(int)index].GetDisplayName(null, Terrain.MakeBlockValue((int)index)));
+                    (obj.Children.Find<LabelWidget>("SelectBlockItem.Text")).Text = (BlocksManager.Blocks[(int)index].GetDisplayName(null, Terrain.MakeBlockValue((int)index)));
                     return obj;
                 }, delegate (object index)
                 {
@@ -381,7 +381,7 @@ namespace CreatorModAPI
             weatherEffectsButton.Text = (worldSettings.AreWeatherEffectsEnabled ? "Enabled" : "Disabled");
             adventureRespawnButton.Text = (worldSettings.IsAdventureRespawnAllowed ? "Allowed" : "Not Allowed");
             adventureSurvivalMechanicsButton.Text = (worldSettings.AreAdventureSurvivalMechanicsEnabled ? "Enabled" : "Disabled");
-            ((FontTextWidget)terrainGenerationLabel).Text=(worldSettings.TerrainGenerationMode.ToString());
+            (terrainGenerationLabel).Text = (worldSettings.TerrainGenerationMode.ToString());
         }
 
         private int FindNearestIndex(IList<float> list, float v)

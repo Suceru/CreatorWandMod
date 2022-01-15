@@ -16,10 +16,10 @@ namespace CreatorModAPI
             base.creatorAPI = creatorAPI;
             player = creatorAPI.componentMiner.ComponentPlayer;
             subsystemTerrain = player.Project.FindSubsystem<SubsystemTerrain>(throwOnError: true);
-            XElement node = ContentManager.Get<XElement>("Dialog/Manager3", (string)null);
+            XElement node = ContentManager.Get<XElement>("Dialog/Manager3");
             LoadChildren(this, node);
             GeneralSet();
-            ((FontTextWidget)Children.Find<LabelWidget>("Name")).Text=(CreatorMain.Display_Key_Dialog("twpointSdialog1"));
+            (Children.Find<LabelWidget>("Name")).Text = (CreatorMain.Display_Key_Dialog("twpointSdialog1"));
             OKButton = Children.Find<ButtonWidget>("OK");
             OKButton.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Manager3", "OK");
             Children.Find<BevelledButtonWidget>("Cancel").Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Manager3", "Cancel");
