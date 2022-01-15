@@ -23,9 +23,9 @@ namespace CreatorModAPI
         public LevelSetDialog(CreatorAPI creatorAPI)
         {
             player = creatorAPI.componentMiner.ComponentPlayer;
-            XElement node = ContentManager.Get<XElement>("Dialog/Level", (string)null);
+            XElement node = ContentManager.Get<XElement>("Dialog/Level");
             LoadChildren(this, node);
-            ((FontTextWidget)Children.Find<LabelWidget>("Level1")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Level", "Level1"));
+            (Children.Find<LabelWidget>("Level1")).Text = (CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Level", "Level1"));
             Radius = Children.Find<SliderWidget>("Level");
             plusButton = Children.Find<ButtonWidget>("Add button");
             minusButton = Children.Find<ButtonWidget>("Sub button");
@@ -72,7 +72,7 @@ namespace CreatorModAPI
         {
             minusButton.IsEnabled = ((double)Radius.Value > (double)Radius.MinValue);
             plusButton.IsEnabled = ((double)Radius.Value < (double)Radius.MaxValue);
-            ((FontTextWidget)delayLabel).Text=(string.Format(CreatorMain.Display_Key_Dialog("editleveldialogl"), (int)Radius.Value));
+            (delayLabel).Text = (string.Format(CreatorMain.Display_Key_Dialog("editleveldialogl"), (int)Radius.Value));
         }
     }
 }

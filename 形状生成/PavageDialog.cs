@@ -25,9 +25,9 @@ namespace CreatorModAPI
         {
             this.creatorAPI = creatorAPI;
             player = creatorAPI.componentMiner.ComponentPlayer;
-            XElement node = ContentManager.Get<XElement>("Dialog/Tile", (string)null);
+            XElement node = ContentManager.Get<XElement>("Dialog/Tile");
             LoadChildren(this, node);
-            ((FontTextWidget)Children.Find<LabelWidget>("Tile")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Tile", "Tile"));
+            (Children.Find<LabelWidget>("Tile")).Text = (CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Tile", "Tile"));
             OKButton = Children.Find<ButtonWidget>("OK");
             OKButton.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Tile", "OK");
             cancelButton = Children.Find<ButtonWidget>("Cancel");

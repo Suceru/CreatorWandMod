@@ -69,11 +69,17 @@ namespace CreatorModAPI
 
         public static List<Point3> Position;
 
-        public static string version = "2.2.10.L.31B";
+        public static string version = "2.2.10.M.51B";
 
-        public static int Numversion = 922117620;
+        public static int Numversion = 104910;
 
-        public static int[] Sumnumversion = new int[9]
+        public static int[] Sumnumversion = new int[]
+        {
+            104910,
+           104590
+        };
+
+        public static int[] Donotnumversion = new int[]
         {
             902021003,
             902021011,
@@ -84,17 +90,6 @@ namespace CreatorModAPI
             922107502,
             922107504,
             922117620
-        };
-
-        public static int[] Donotnumversion = new int[7]
-        {
-            922107501,
-            902021003,
-            902021011,
-            902021002,
-            902021012,
-            902021013,
-            922107401
         };
 
         public static string password = "456321";

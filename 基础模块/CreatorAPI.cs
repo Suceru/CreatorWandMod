@@ -76,7 +76,46 @@ namespace CreatorModAPI
         {
             try
             {
-                string a = ModsManager.Configs["Language"];
+
+
+                switch (ModsManager.modSettings.languageType)
+                {
+                    case LanguageControl.LanguageType.ot_OT:
+                    case LanguageControl.LanguageType.en_US:
+                        CreatorMain.Language = Language = Language.en_US;
+                        break;
+                    case LanguageControl.LanguageType.zh_CN:
+                        CreatorMain.Language = Language = Language.zh_CN;
+                        break;
+
+                    default:
+                        CreatorMain.Language = Language = Language.en_US;
+                        break;
+                }
+
+                /*    switch (ModsManager.Configs["Language"])
+                    {
+                        case "zh-CN":
+                            Language = Language.zh_CN;
+                            break;
+                        case "en-US":
+                            Language = Language.en_US;
+                            break;
+                        case "ja_JP":
+                            Language = Language.ja_JP;
+                            break;
+                        default:
+                            Log.Warning(ModsManager.Configs["Language"]);
+                            break;
+                    }*/
+                //这个是加载多语言界面
+                XElement xElement = ContentManager.Get<XElement>("CreatorDisplay");
+                CreatorDisplayDataDialog = from xe in xElement.Element("CreatorDisplayDialog").Elements("CreatorDisplayData")
+                                           where xe.Attribute("Language").Value == Language.ToString()
+                                           select xe;
+                CreatorDisplayDataUI = xElement.Element("CreatorDisplayUI").Elements();
+                ContentManager.Dispose("CreatorDisplay");
+                /*string a = ModsManager.Configs["Language"];
                 if (!(a == "zh-CN"))
                 {
                     if (a == "en-US")
@@ -91,14 +130,14 @@ namespace CreatorModAPI
                 else
                 {
                     Language = Language.zh_CN;
-                }
+                }*/
 
-                XElement xElement = ContentManager.Get<XElement>("CreatorDisplay", (string)null);
-                CreatorDisplayDataDialog = from xe in xElement.Element("CreatorDisplayDialog").Elements("CreatorDisplayData")
-                                           where xe.Attribute("Language").Value == Language.ToString()
-                                           select xe;
-                CreatorDisplayDataUI = xElement.Element("CreatorDisplayUI").Elements();
-                ContentManager.Dispose("CreatorDisplay");
+                /*  XElement xElement = ContentManager.Get<XElement>("CreatorDisplay");
+                  CreatorDisplayDataDialog = from xe in xElement.Element("CreatorDisplayDialog").Elements("CreatorDisplayData")
+                                             where xe.Attribute("Language").Value == Language.ToString()
+                                             select xe;
+                  CreatorDisplayDataUI = xElement.Element("CreatorDisplayUI").Elements();
+                  ContentManager.Dispose("CreatorDisplay");*/
             }
             catch (Exception ex)
             {
@@ -226,7 +265,7 @@ namespace CreatorModAPI
             {
                 revokeData.CreateChunk(x, y, unLimited: true);
             }
-
+            CreatorWand2.CW2EntityManager.RemoveEntity(new Point3(x, y, z));
             switch (CreateBlockType)
             {
                 case CreateBlockType.Normal:
@@ -247,7 +286,7 @@ namespace CreatorModAPI
             {
                 revokeData.CreateChunk(point3.X, point3.Z, unLimited: true);
             }
-
+            CreatorWand2.CW2EntityManager.RemoveEntity(point3);
             switch (CreateBlockType)
             {
                 case CreateBlockType.Normal:
@@ -290,7 +329,7 @@ namespace CreatorModAPI
                 }
 
                 goto IL_0071;
-            IL_0071:
+IL_0071:
                 terrainChunk.Cells[y + (x & 0xF) * 256 + (z & 0xF) * 256 * 16] = value;
                 terrainChunk.ModificationCounter++;
                 if (UnLimitedOfCreate)

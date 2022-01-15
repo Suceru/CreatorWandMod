@@ -41,7 +41,8 @@ namespace CreatorModAPI
         {
             if (MathUtils.Max(MathUtils.Abs(vector3.X), MathUtils.Abs(vector3.Y), MathUtils.Abs(vector3.Z)) == MathUtils.Abs(vector3.X))
             {
-                return Vector3.Normalize(Vector3.Round(new Vector3(vector3.X, 0f, 0f)));
+                if (MathUtils.Max(MathUtils.Abs(vector3.Y), MathUtils.Abs(vector3.Z)) == MathUtils.Abs(vector3.Y))
+                    return Vector3.Normalize(Vector3.Round(new Vector3(vector3.X, 0f, 0f)));
             }
 
             if (MathUtils.Max(MathUtils.Abs(vector3.X), MathUtils.Abs(vector3.Y), MathUtils.Abs(vector3.Z)) == MathUtils.Abs(vector3.Y))
@@ -652,11 +653,16 @@ namespace CreatorModAPI
             }
         }
 
+        public static Matrix GetFaceFunction(Vector3 SrcFace, Vector3 DecFace)
+        {
+            return CreatorWand2.CW2Matrix.CW2FromTwoVectors(SrcFace, DecFace);
+        }
+        //进行面计算,例如泥土块
         public static int GetFaceVector(int cellValue, Matrix Translate)
         {
             return CellFace.Vector3ToFace(Vector3Normalize(Vector3.TransformNormal(CellFace.FaceToVector3(GetFace(cellValue)), Translate)));
         }
-
+        //进行旋转计算
         public static int GetRotateVector(int cellValue, Matrix Translate)
         {
             return CellFace.Vector3ToFace(Vector3Normalize(Vector3.TransformNormal(CellFace.FaceToVector3(GetFace(cellValue)), Translate)));
@@ -1718,179 +1724,329 @@ namespace CreatorModAPI
 
             return 0;
         }
-
         public static int GetFace(int cellValue)
         {
-            Block block = BlocksManager.Blocks[Terrain.ExtractContents(cellValue)];
-            if (!(block is BottomSuckerBlock))
+            switch (BlocksManager.Blocks[Terrain.ExtractContents(cellValue)])
             {
-                if (!(block is SwitchBlock) && !(block is PressurePlateBlock))
-                {
-                    if (!(block is SpikedPlankBlock))
-                    {
-                        if (!(block is MotionDetectorBlock) && !(block is ButtonBlock) && !(block is LightbulbBlock) && !(block is FourLedBlock) && !(block is LedBlock) && !(block is MulticoloredLedBlock) && !(block is OneLedBlock) && !(block is PhotodiodeBlock) && !(block is DetonatorBlock) && !(block is TorchBlock) && !(block is DispenserBlock) && !(block is PostedSignBlock))
-                        {
-                            if (!(block is FenceBlock))
-                            {
-                                if (!(block is SevenSegmentDisplayBlock) && !(block is TargetBlock) && !(block is LadderBlock) && !(block is FenceGateBlock) && !(block is FurnitureBlock) && !(block is JackOLanternBlock) && !(block is IvyBlock) && !(block is DoorBlock) && !(block is TrapdoorBlock) && !(block is ThermometerBlock) && !(block is HygrometerBlock) && !(block is WireThroughBlock) && !(block is WoodBlock) && !(block is StairsBlock) && !(block is FurnaceBlock) && !(block is ChestBlock) && !(block is AttachedSignBlock))
-                                {
-                                    if (!(block is PistonBlock))
-                                    {
-                                        if (!(block is WireBlock))
-                                        {
-                                            if (!(block is GravestoneBlock))
-                                            {
-                                                if (!(block is MagnetBlock))
-                                                {
-                                                    if (block is RotateableMountedElectricElementBlock)
-                                                    {
-                                                        return (Terrain.ExtractData(cellValue) >> 2) & 7;
-                                                    }
-
-                                                    return -1;
-                                                }
-
-                                                return Terrain.ExtractData(cellValue) & 1;
-                                            }
-
-                                            return (Terrain.ExtractData(cellValue) & 8) >> 3;
-                                        }
-
-                                        return Terrain.ExtractData(cellValue) & 0x3F;
-                                    }
-
-                                    return (Terrain.ExtractData(cellValue) >> 3) & 7;
-                                }
-
-                                return Terrain.ExtractData(cellValue) & 3;
-                            }
-
-                            return Terrain.ExtractData(cellValue) & 0xF;
-                        }
-
-                        return Terrain.ExtractData(cellValue) & 7;
-                    }
-
+                case BottomSuckerBlock _:
+                    return BottomSuckerBlock.GetFace(Terrain.ExtractData(cellValue));
+                case SwitchBlock _:
+                case PressurePlateBlock _:
+                    return (Terrain.ExtractData(cellValue) >> 1) & 7;
+                case SpikedPlankBlock _:
                     return SpikedPlankBlock.GetMountingFace(Terrain.ExtractData(cellValue));
-                }
 
-                return (Terrain.ExtractData(cellValue) >> 1) & 7;
+                case MotionDetectorBlock _:
+                case ButtonBlock _:
+                case LightbulbBlock _:
+                case FourLedBlock _:
+                case LedBlock _:
+                case MulticoloredLedBlock _:
+                case OneLedBlock _:
+                case PhotodiodeBlock _:
+                case DetonatorBlock _:
+                case TorchBlock _:
+                case DispenserBlock _:
+                case PostedSignBlock _:
+                    return (Terrain.ExtractData(cellValue) & 7);
+                case FenceBlock _:
+                    return Terrain.ExtractData(cellValue) & 15;
+                case SevenSegmentDisplayBlock _:
+                case TargetBlock _:
+                case LadderBlock _:
+                case FenceGateBlock _:
+                case FurnitureBlock _:
+                case JackOLanternBlock _:
+                case IvyBlock _:
+                case DoorBlock _:
+                case TrapdoorBlock _:
+                case ThermometerBlock _:
+                case HygrometerBlock _:
+                case WireThroughBlock _:
+                case WoodBlock _:
+                case StairsBlock _:
+                case FurnaceBlock _:
+                case ChestBlock _:
+                case AttachedSignBlock _:
+                    return Terrain.ExtractData(cellValue) & 3;
+                case PistonBlock _:
+                    return (Terrain.ExtractData(cellValue) >> 3) & 7;
+                case WireBlock _:
+                    return Terrain.ExtractData(cellValue) & 0x3F;
+                case GravestoneBlock _:
+                    return (Terrain.ExtractData(cellValue) & 8) >> 3;
+                case MagnetBlock _:
+                    return Terrain.ExtractData(cellValue) & 1;
+                case RotateableMountedElectricElementBlock _:
+                    return (Terrain.ExtractData(cellValue) >> 2) & 7;
+                default:
+                    return -1;
             }
 
-            return BottomSuckerBlock.GetFace(Terrain.ExtractData(cellValue));
         }
-
         public static int SetFace(int cellValue, int face)
         {
-            Block block = BlocksManager.Blocks[Terrain.ExtractContents(cellValue)];
-            if (!(block is BottomSuckerBlock))
+            switch (BlocksManager.Blocks[Terrain.ExtractContents(cellValue)])
             {
-                if (!(block is SwitchBlock) && !(block is PressurePlateBlock))
-                {
-                    if (!(block is SpikedPlankBlock))
-                    {
-                        if (!(block is MotionDetectorBlock) && !(block is ButtonBlock) && !(block is LightbulbBlock) && !(block is FourLedBlock) && !(block is LedBlock) && !(block is MulticoloredLedBlock) && !(block is OneLedBlock) && !(block is PhotodiodeBlock) && !(block is DetonatorBlock) && !(block is TorchBlock) && !(block is DispenserBlock) && !(block is PostedSignBlock))
-                        {
-                            if (!(block is FenceBlock))
-                            {
-                                if (!(block is SevenSegmentDisplayBlock) && !(block is TargetBlock) && !(block is LadderBlock) && !(block is FenceGateBlock) && !(block is FurnitureBlock) && !(block is JackOLanternBlock) && !(block is IvyBlock) && !(block is DoorBlock) && !(block is TrapdoorBlock) && !(block is ThermometerBlock) && !(block is HygrometerBlock) && !(block is WireThroughBlock) && !(block is WoodBlock) && !(block is StairsBlock) && !(block is FurnaceBlock) && !(block is ChestBlock) && !(block is AttachedSignBlock))
-                                {
-                                    if (!(block is PistonBlock))
-                                    {
-                                        if (!(block is WireBlock))
-                                        {
-                                            if (!(block is GravestoneBlock))
-                                            {
-                                                if (!(block is MagnetBlock))
-                                                {
-                                                    if (block is RotateableMountedElectricElementBlock)
-                                                    {
-                                                        return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -29) | ((face & 7) << 2));
-                                                    }
-
-                                                    return cellValue;
-                                                }
-
-                                                return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -2) | (face & 1));
-                                            }
-
-                                            return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -65) | ((face & 8) << 3));
-                                        }
-
-                                        return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -64) | (face & 0x3F));
-                                    }
-
-                                    return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -57) | ((face & 7) << 3));
-                                }
-
-                                return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -4) | (face & 3));
-                            }
-
-                            return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -16) | (face & 0xF));
-                        }
-
-                        return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -8) | (face & 7));
-                    }
-
+                case BottomSuckerBlock _:
+                    return Terrain.ReplaceData(cellValue, BottomSuckerBlock.SetFace(Terrain.ExtractData(cellValue), face));
+                case SwitchBlock _:
+                case PressurePlateBlock _:
+                    return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -15) | ((face & 7) << 1));
+                case SpikedPlankBlock _:
                     return Terrain.ReplaceData(cellValue, SpikedPlankBlock.SetMountingFace(Terrain.ExtractData(cellValue), face));
-                }
-
-                return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -15) | ((face & 7) << 1));
+                case MotionDetectorBlock _:
+                case ButtonBlock _:
+                case LightbulbBlock _:
+                case FourLedBlock _:
+                case LedBlock _:
+                case MulticoloredLedBlock _:
+                case OneLedBlock _:
+                case PhotodiodeBlock _:
+                case DetonatorBlock _:
+                case TorchBlock _:
+                case DispenserBlock _:
+                case PostedSignBlock _:
+                    return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -8) | (face & 7));
+                case FenceBlock _:
+                    return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -16) | (face & 15));
+                case SevenSegmentDisplayBlock _:
+                case TargetBlock _:
+                case LadderBlock _:
+                case FenceGateBlock _:
+                case FurnitureBlock _:
+                case JackOLanternBlock _:
+                case IvyBlock _:
+                case DoorBlock _:
+                case TrapdoorBlock _:
+                case ThermometerBlock _:
+                case HygrometerBlock _:
+                case WireThroughBlock _:
+                case WoodBlock _:
+                case StairsBlock _:
+                case FurnaceBlock _:
+                case ChestBlock _:
+                case AttachedSignBlock _:
+                    return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -4) | (face & 3));
+                case PistonBlock _:
+                    return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -57) | ((face & 7) << 3));
+                case WireBlock _:
+                    return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -0x40) | (face & 0x3F));
+                case GravestoneBlock _:
+                    return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -65) | ((face & 8) << 3));
+                case MagnetBlock _:
+                    return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -2) | (face & 1));
+                case RotateableMountedElectricElementBlock _:
+                    return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -29) | ((face & 7) << 2));
+                default:
+                    return cellValue;
             }
 
-            return Terrain.ReplaceData(cellValue, BottomSuckerBlock.SetFace(Terrain.ExtractData(cellValue), face));
         }
-
         public static int GetRotate(int cellValue)
         {
-            Block block = BlocksManager.Blocks[Terrain.ExtractContents(cellValue)];
-            if (!(block is RotateableMountedElectricElementBlock))
+            switch (BlocksManager.Blocks[Terrain.ExtractContents(cellValue)])
             {
-                if (!(block is StairsBlock))
-                {
-                    if (!(block is TrapdoorBlock))
-                    {
-                        if (block is SlabBlock)
-                        {
-                            return Terrain.ExtractData(cellValue) & 1;
-                        }
-
-                        return -1;
-                    }
-
+                case RotateableMountedElectricElementBlock _:
+                    return Terrain.ExtractData(cellValue) & 3;
+                case StairsBlock _:
+                    return (Terrain.ExtractData(cellValue) & 4) >> 2;
+                case TrapdoorBlock _:
                     return (Terrain.ExtractData(cellValue) & 8) >> 3;
-                }
-
-                return (Terrain.ExtractData(cellValue) & 4) >> 2;
+                case SlabBlock _:
+                    return Terrain.ExtractData(cellValue) & 1;
+                default: return -1;
             }
 
-            return Terrain.ExtractData(cellValue) & 3;
         }
-
         public static int SetRotate(int cellValue, int Rotate)
         {
-            Block block = BlocksManager.Blocks[Terrain.ExtractContents(cellValue)];
-            if (!(block is RotateableMountedElectricElementBlock))
+            switch (BlocksManager.Blocks[Terrain.ExtractContents(cellValue)])
             {
-                if (!(block is StairsBlock))
-                {
-                    if (!(block is TrapdoorBlock))
-                    {
-                        if (block is SlabBlock)
-                        {
-                            return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -2) | (Rotate & 1));
-                        }
-
-                        return cellValue;
-                    }
-
+                case RotateableMountedElectricElementBlock _:
+                    return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -4) | (Rotate & 3));
+                case StairsBlock _:
+                    return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -5) | ((Rotate & 1) << 1));
+                case TrapdoorBlock _:
                     return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -9) | ((Rotate & 8) << 3));
-                }
-
-                return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -5) | ((Rotate & 1) << 1));
+                case SlabBlock _:
+                    return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -2) | (Rotate & 1));
+                default: return cellValue;
             }
 
-            return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -4) | (Rotate & 3));
+            /* public static int GetFace(int cellValue)
+             {
+                 Block block = BlocksManager.Blocks[Terrain.ExtractContents(cellValue)];
+                 if (!(block is BottomSuckerBlock))
+                 {
+                     if (!(block is SwitchBlock) && !(block is PressurePlateBlock))
+                     {
+                         if (!(block is SpikedPlankBlock))
+                         {
+                             if (!(block is MotionDetectorBlock) && !(block is ButtonBlock) && !(block is LightbulbBlock) && !(block is FourLedBlock) && !(block is LedBlock) && !(block is MulticoloredLedBlock) && !(block is OneLedBlock) && !(block is PhotodiodeBlock) && !(block is DetonatorBlock) && !(block is TorchBlock) && !(block is DispenserBlock) && !(block is PostedSignBlock))
+                             {
+                                 if (!(block is FenceBlock))
+                                 {
+                                     if (!(block is SevenSegmentDisplayBlock) && !(block is TargetBlock) && !(block is LadderBlock) && !(block is FenceGateBlock) && !(block is FurnitureBlock) && !(block is JackOLanternBlock) && !(block is IvyBlock) && !(block is DoorBlock) && !(block is TrapdoorBlock) && !(block is ThermometerBlock) && !(block is HygrometerBlock) && !(block is WireThroughBlock) && !(block is WoodBlock) && !(block is StairsBlock) && !(block is FurnaceBlock) && !(block is ChestBlock) && !(block is AttachedSignBlock))
+                                     {
+                                         if (!(block is PistonBlock))
+                                         {
+                                             if (!(block is WireBlock))
+                                             {
+                                                 if (!(block is GravestoneBlock))
+                                                 {
+                                                     if (!(block is MagnetBlock))
+                                                     {
+                                                         if (block is RotateableMountedElectricElementBlock)
+                                                         {
+                                                             return (Terrain.ExtractData(cellValue) >> 2) & 7;
+                                                         }
+
+                                                         return -1;
+                                                     }
+
+                                                     return Terrain.ExtractData(cellValue) & 1;
+                                                 }
+
+                                                 return (Terrain.ExtractData(cellValue) & 8) >> 3;
+                                             }
+
+                                             return Terrain.ExtractData(cellValue) & 0x3F;
+                                         }
+
+                                         return (Terrain.ExtractData(cellValue) >> 3) & 7;
+                                     }
+
+                                     return Terrain.ExtractData(cellValue) & 3;
+                                 }
+
+                                 return Terrain.ExtractData(cellValue) & 0xF;
+                             }
+
+                             return Terrain.ExtractData(cellValue) & 7;
+                         }
+
+                         return SpikedPlankBlock.GetMountingFace(Terrain.ExtractData(cellValue));
+                     }
+
+                     return (Terrain.ExtractData(cellValue) >> 1) & 7;
+                 }
+
+                 return BottomSuckerBlock.GetFace(Terrain.ExtractData(cellValue));
+             }
+
+             public static int SetFace(int cellValue, int face)
+             {
+                 Block block = BlocksManager.Blocks[Terrain.ExtractContents(cellValue)];
+                 if (!(block is BottomSuckerBlock))
+                 {
+                     if (!(block is SwitchBlock) && !(block is PressurePlateBlock))
+                     {
+                         if (!(block is SpikedPlankBlock))
+                         {
+                             if (!(block is MotionDetectorBlock) && !(block is ButtonBlock) && !(block is LightbulbBlock) && !(block is FourLedBlock) && !(block is LedBlock) && !(block is MulticoloredLedBlock) && !(block is OneLedBlock) && !(block is PhotodiodeBlock) && !(block is DetonatorBlock) && !(block is TorchBlock) && !(block is DispenserBlock) && !(block is PostedSignBlock))
+                             {
+                                 if (!(block is FenceBlock))
+                                 {
+                                     if (!(block is SevenSegmentDisplayBlock) && !(block is TargetBlock) && !(block is LadderBlock) && !(block is FenceGateBlock) && !(block is FurnitureBlock) && !(block is JackOLanternBlock) && !(block is IvyBlock) && !(block is DoorBlock) && !(block is TrapdoorBlock) && !(block is ThermometerBlock) && !(block is HygrometerBlock) && !(block is WireThroughBlock) && !(block is WoodBlock) && !(block is StairsBlock) && !(block is FurnaceBlock) && !(block is ChestBlock) && !(block is AttachedSignBlock))
+                                     {
+                                         if (!(block is PistonBlock))
+                                         {
+                                             if (!(block is WireBlock))
+                                             {
+                                                 if (!(block is GravestoneBlock))
+                                                 {
+                                                     if (!(block is MagnetBlock))
+                                                     {
+                                                         if (block is RotateableMountedElectricElementBlock)
+                                                         {
+                                                             return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -29) | ((face & 7) << 2));
+                                                         }
+
+                                                         return cellValue;
+                                                     }
+
+                                                     return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -2) | (face & 1));
+                                                 }
+
+                                                 return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -65) | ((face & 8) << 3));
+                                             }
+
+                                             return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -64) | (face & 0x3F));
+                                         }
+
+                                         return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -57) | ((face & 7) << 3));
+                                     }
+
+                                     return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -4) | (face & 3));
+                                 }
+
+                                 return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -16) | (face & 0xF));
+                             }
+
+                             return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -8) | (face & 7));
+                         }
+
+                         return Terrain.ReplaceData(cellValue, SpikedPlankBlock.SetMountingFace(Terrain.ExtractData(cellValue), face));
+                     }
+
+                     return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -15) | ((face & 7) << 1));
+                 }
+
+                 return Terrain.ReplaceData(cellValue, BottomSuckerBlock.SetFace(Terrain.ExtractData(cellValue), face));
+             }
+
+             public static int GetRotate(int cellValue)
+             {
+                 Block block = BlocksManager.Blocks[Terrain.ExtractContents(cellValue)];
+                 if (!(block is RotateableMountedElectricElementBlock))
+                 {
+                     if (!(block is StairsBlock))
+                     {
+                         if (!(block is TrapdoorBlock))
+                         {
+                             if (block is SlabBlock)
+                             {
+                                 return Terrain.ExtractData(cellValue) & 1;
+                             }
+
+                             return -1;
+                         }
+
+                         return (Terrain.ExtractData(cellValue) & 8) >> 3;
+                     }
+
+                     return (Terrain.ExtractData(cellValue) & 4) >> 2;
+                 }
+
+                 return Terrain.ExtractData(cellValue) & 3;
+             }
+
+             public static int SetRotate(int cellValue, int Rotate)
+             {
+                 Block block = BlocksManager.Blocks[Terrain.ExtractContents(cellValue)];
+                 if (!(block is RotateableMountedElectricElementBlock))
+                 {
+                     if (!(block is StairsBlock))
+                     {
+                         if (!(block is TrapdoorBlock))
+                         {
+                             if (block is SlabBlock)
+                             {
+                                 return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -2) | (Rotate & 1));
+                             }
+
+                             return cellValue;
+                         }
+
+                         return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -9) | ((Rotate & 8) << 3));
+                     }
+
+                     return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -5) | ((Rotate & 1) << 1));
+                 }
+
+                 return Terrain.ReplaceData(cellValue, (Terrain.ExtractData(cellValue) & -4) | (Rotate & 3));
+             */
         }
     }
 }

@@ -28,9 +28,9 @@ namespace CreatorModAPI
                 this.player = player;
                 this.dialog = dialog;
                 this.listView = listView;
-                XElement node = ContentManager.Get<XElement>("Dialog/Manager3", (string)null);
+                XElement node = ContentManager.Get<XElement>("Dialog/Manager3");
                 LoadChildren(this, node);
-                ((FontTextWidget)Children.Find<LabelWidget>("Name")).Text=(CreatorMain.Display_Key_Dialog("moddialogname"));
+                (Children.Find<LabelWidget>("Name")).Text = (CreatorMain.Display_Key_Dialog("moddialogname"));
                 cancelButton = Children.Find<ButtonWidget>("Cancel");
                 cancelButton.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Manager3", "Cancel");
                 OK = Children.Find<ButtonWidget>("OK");
@@ -128,7 +128,7 @@ namespace CreatorModAPI
         {
             this.creatorAPI = creatorAPI;
             player = creatorAPI.componentMiner.ComponentPlayer;
-            XElement node = ContentManager.Get<XElement>("Dialog/OneClickGeneration", (string)null);
+            XElement node = ContentManager.Get<XElement>("Dialog/OneClickGeneration");
             LoadChildren(this, node);
             CreateButton = Children.Find<ButtonWidget>("Create");
             CreateButton.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "OneClickGeneration", "Create");

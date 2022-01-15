@@ -1,9 +1,11 @@
-﻿using Engine;
+﻿using CreatorWand2;
+using Engine;
 using Game;
 using GameEntitySystem;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Linq;
 using TemplatesDatabase;
 
@@ -11,6 +13,10 @@ namespace CreatorModAPI
 {
     public class CreatorWidget : CanvasWidget
     {
+        /*public virtual decimal CalculatePay()
+        {
+            return _basepay;
+        }*/
         private readonly ComponentPlayer player;
 
         private readonly CreatorAPI creatorAPI;
@@ -109,7 +115,7 @@ namespace CreatorModAPI
         {
             player = creatorAPI.componentMiner.ComponentPlayer;
             this.creatorAPI = creatorAPI;
-            XElement node = (!creatorAPI.oldMainWidget) ? ContentManager.Get<XElement>("NewCreatorAPIWidget", (string)null) : ContentManager.Get<XElement>("CreatorAPIWidget", (string)null);
+            XElement node = (!creatorAPI.oldMainWidget) ? ContentManager.Get<XElement>("NewCreatorAPIWidget") : ContentManager.Get<XElement>("CreatorAPIWidget");
             LoadChildren(this, node);
             worldSettings = player.Project.FindSubsystem<SubsystemGameInfo>(throwOnError: true).WorldSettings;
             subsystemTerrain = player.Project.FindSubsystem<SubsystemTerrain>(throwOnError: true);
@@ -194,6 +200,7 @@ namespace CreatorModAPI
             LightWorldButton = Children.Find<ButtonWidget>("Light Up Blocks");
             LightWorldButton.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "NewCreatorAPIWidget", "Light Up Blocks");
             Children.Find<BevelledButtonWidget>("Coming Soon").Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "NewCreatorAPIWidget", "Coming Soon");
+            Children.Find<BevelledButtonWidget>("Coming Soon").Color = Color.White;
             LangugeButton = Children.Find<ButtonWidget>("Language");
             LangugeButton.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "NewCreatorAPIWidget", "Language");
             WeatherButton = Children.Find<ButtonWidget>("Weather");
@@ -209,6 +216,24 @@ namespace CreatorModAPI
             if (Children.Find<BevelledButtonWidget>("Coming Soon").IsClicked)
             {
                 ViewButton++;
+                /*void p(Terrain terrain, Point3 point3)
+                {
+                    Log.Information("C(" + point3 + ")");
+                }
+                Cw2CopyAndPaste.CopyBlock += (Action<Terrain, Point3>)p;
+                Cw2CopyAndPaste.LoopCopy(player.ComponentMiner.ComponentCreature.ComponentCreatureModel.EyeRotation, CreatorMain.Position[0], CreatorMain.Position[1]);
+                Cw2CopyAndPaste.CopyBlock -= (Action<Terrain, Point3>)p;
+
+                void q(SubsystemTerrain subsystemTerrain, Point3 point3, Matrix matrix) {
+                    Log.Information("P(" + point3 + ")");
+                }
+                Cw2CopyAndPaste.PasteBlock += q;
+                Cw2CopyAndPaste.LoopPaste(player.ComponentMiner.ComponentCreature.ComponentCreatureModel.EyeRotation, CreatorMain.Position[0], Cw2CopyAndPaste.GetPoint3Num(player.ComponentMiner.ComponentCreature.ComponentCreatureModel.EyeRotation, CreatorMain.Position[0], CreatorMain.Position[1]), new Matrix());
+                Cw2CopyAndPaste.PasteBlock -= q;*/
+                /*var a = CreatorMain.Position[0];
+                CW2EntityManager.RemoveEntity(a);*/
+
+
             }
 
             try
@@ -217,6 +242,31 @@ namespace CreatorModAPI
                 {
                     IsRain = !IsRain;
                     SubsystemWeather1.SetPrecipitationTime(IsRain);
+                    /*Log.Information(CellFace.FaceToVector3(1));
+                    Log.Information(CellFace.FaceToVector3(3));
+                    Log.Information(CW2Matrix.CW2FromTwoVectors(CellFace.FaceToVector3(1), CellFace.FaceToVector3(3)));
+                    Log.Information(Vector3.TransformNormal(CellFace.FaceToVector3(1), CW2Matrix.CW2FromTwoVectors(CellFace.FaceToVector3(1), CellFace.FaceToVector3(3))));
+                    Log.Information(SetFaceAndRotate.Vector3Normalize(Vector3.TransformNormal(CellFace.FaceToVector3(1), CW2Matrix.CW2FromTwoVectors(CellFace.FaceToVector3(1), CellFace.FaceToVector3(3)))));
+                    Log.Information(CellFace.Vector3ToFace(SetFaceAndRotate.Vector3Normalize(Vector3.TransformNormal(CellFace.FaceToVector3(1), CW2Matrix.CW2FromTwoVectors(CellFace.FaceToVector3(1), CellFace.FaceToVector3(3))))));*/
+                    /* int ps=0, pe=4;
+                     Log.Information(CellFace.Vector3ToFace(Vector3.TransformNormal(CellFace.FaceToVector3(ps), CW2Matrix.CW2FromTwoVectors(CellFace.FaceToVector3(ps), CellFace.FaceToVector3(pe)))));
+                     Point2 point1 = new Point2(4,1);
+                     Point2 point2 = new Point2(5, 0);
+                     Point2 point3 = new Point2(5, 1);
+                     CW2Matrix.CW2FromTwoVectors(CW2Matrix.FaceToVector3(point1), CW2Matrix.FaceToVector3(point2));
+                     Log.Information(point1+"->"+point2);
+                     Log.Information(point1 + "->" + point3);
+                     Log.Information("[][]");
+                     for (int i = 0; i < 23; i++)
+                     {
+                         Log.Information("[][]"+i); 
+                         Log.Information(CW2Matrix.FaceToVector3(new Point2(i / 4, i % 4)) + "->" + CW2Matrix.FaceToVector3(CW2Matrix.Vector3ToFace(Vector3.TransformNormal(CW2Matrix.FaceToVector3(new Point2(i / 4, i % 4)), CW2Matrix.GetFaceFunction(CW2Matrix.FaceToVector3(point1), CW2Matrix.FaceToVector3(point2))))));
+                         Log.Information(CW2Matrix.Vector3ToFace(CW2Matrix.FaceToVector3(new Point2(i / 4, i % 4))) + "->" + CW2Matrix.Vector3ToFace(Vector3.TransformNormal(CW2Matrix.FaceToVector3(new Point2(i / 4, i % 4)), CW2Matrix.GetFaceFunction(CW2Matrix.FaceToVector3(point1), CW2Matrix.FaceToVector3(point2)))));
+                         Log.Information(CW2Matrix.FaceToVector3(new Point2(i / 4, i % 4))+"->"+ CW2Matrix.FaceToVector3(CW2Matrix.Vector3ToFace(Vector3.TransformNormal(CW2Matrix.FaceToVector3(new Point2(i/4, i % 4)), CW2Matrix.GetFaceFunction(CW2Matrix.FaceToVector3(point1), CW2Matrix.FaceToVector3(point3))))));
+                         Log.Information(CW2Matrix.Vector3ToFace(CW2Matrix.FaceToVector3(new Point2(i / 4, i % 4))) + "->" + CW2Matrix.Vector3ToFace(Vector3.TransformNormal(CW2Matrix.FaceToVector3(new Point2(i / 4, i % 4)), CW2Matrix.GetFaceFunction(CW2Matrix.FaceToVector3(point1), CW2Matrix.FaceToVector3(point3)))));
+                     }*/
+
+
                 }
                 else
                 {
@@ -236,7 +286,29 @@ namespace CreatorModAPI
             switch (ViewButton)
             {
                 case 0:
-                    Children.Find<BevelledButtonWidget>("Coming Soon").Text = "View: " + CellFace.Vector3ToFace(Matrix.CreateFromQuaternion(player.ComponentMiner.ComponentCreature.ComponentCreatureModel.EyeRotation).Forward, 3);
+                    string vec;
+                    switch (CW2Matrix.Vector3ToFace(player.ComponentMiner.ComponentCreature.ComponentCreatureModel.EyeRotation.GetForwardVector()).X)
+                    {
+                        case 0:
+                            vec = "North";
+                            break;
+                        case 1:
+                            vec = "West";
+                            break;
+                        case 2:
+                            vec = "South";
+                            break;
+                        case 3:
+                            vec = "East";
+                            break;
+                        case 4:
+                            vec = "Up";
+                            break;
+                        default:
+                            vec = "Down";
+                            break;
+                    }
+                    Children.Find<BevelledButtonWidget>("Coming Soon").Text = "View: " + vec;// +"->" + CW2Matrix.Vector3ToFace(player.ComponentMiner.ComponentCreature.ComponentCreatureModel.EyeRotation.GetForwardVector());
                     break;
                 case 1:
                     Children.Find<BevelledButtonWidget>("Coming Soon").Text = CreatorMain.version;
@@ -387,6 +459,21 @@ namespace CreatorModAPI
 
             LightWorldButton.Color = ((!CreatorMain.LightWorld) ? Color.White : Color.Yellow);
             PenetrateButton.Color = ((!CreatorMain.Penetrate) ? Color.White : Color.Yellow);
+            if (CreatorMain.Position != null)
+            {
+                if (CreatorMain.Position[0].Y > 0 && CreatorMain.Position[1].Y > 0)
+                {
+                    EditRegionButton.IsEnabled = true;
+                }
+                else
+                {
+                    EditRegionButton.IsEnabled = false;
+                }
+            }
+            else
+            {
+                EditRegionButton.IsEnabled = false;
+            }
             if (EditRegionButton.IsClicked)
             {
                 DialogsManager.ShowDialog(player.ViewWidget.GameWidget, new NewEditChunkDialog(creatorAPI));
@@ -572,16 +659,21 @@ namespace CreatorModAPI
                     if (result == MessageDialogButton.Button1)
                     {
                         List<Tuple<string, Action>> list = new List<Tuple<string, Action>>();
-                        int a = default(int);
                         for (int num3 = Enum.GetNames(typeof(Language)).GetLength(0) - 1; num3 >= 0; num3--)
                         {
-                            a = num3;
+                            int a = num3;
                             try
                             {
                                 list.Add(new Tuple<string, Action>(Enum.GetName(typeof(Language), num3).ToString(), delegate
                                 {
-                                    CreatorAPI.Language = (Language)Enum.ToObject(typeof(Language), a);
+                                    CreatorMain.Language = CreatorAPI.Language = (Language)Enum.ToObject(typeof(Language), a);
                                     CreatorAPI.IsAddedToProject = false;
+                                    Log.Warning((Language)Enum.ToObject(typeof(Language), a) + "  " + a + " is " + CreatorAPI.Language.ToString());
+                                    /*
+                                    XElement xElement = ContentManager.Get<XElement>("CreatorDisplay");
+                                    CreatorAPI.CreatorDisplayDataDialog = from xe in xElement.Element("CreatorDisplayDialog").Elements("CreatorDisplayData")  where xe.Attribute("Language").Value == CreatorAPI.Language.ToString() select xe;
+                                    CreatorAPI.CreatorDisplayDataUI = xElement.Element("CreatorDisplayUI").Elements();
+                                    ContentManager.Dispose("CreatorDisplay");*/
                                 }));
                             }
                             catch (Exception ex2)

@@ -1,6 +1,6 @@
 ﻿using Engine;
 using Game;
-using System.Text.RegularExpressions;
+//using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -24,11 +24,11 @@ namespace CreatorModAPI
         {
             this.creatorAPI = creatorAPI;
             player = creatorAPI.componentMiner.ComponentPlayer;
-            XElement xElement = ContentManager.Get<XElement>("Dialog/Replace", (string)null);
+            XElement xElement = ContentManager.Get<XElement>("Dialog/Replace");
             LoadChildren(this, new XElement(xElement));
-            ((FontTextWidget)Children.Find<LabelWidget>("Replace1")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Replace", "Replace1"));
-            ((FontTextWidget)Children.Find<LabelWidget>("Index1:")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Replace", "Index1:"));
-            ((FontTextWidget)Children.Find<LabelWidget>("Index2:")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Replace", "Index2:"));
+            (Children.Find<LabelWidget>("Replace1")).Text = (CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Replace", "Replace1"));
+            (Children.Find<LabelWidget>("Index1:")).Text = (CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Replace", "Index1:"));
+            (Children.Find<LabelWidget>("Index2:")).Text = (CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Replace", "Index2:"));
             cancelButton = Children.Find<ButtonWidget>("Cancel");
             cancelButton.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Replace", "Cancel");
             replaceButton = Children.Find<ButtonWidget>("Replace");
@@ -55,9 +55,9 @@ namespace CreatorModAPI
                 Blockid2.Text = "0";
             }
 
-            Regex regex = new Regex("^[0-9]*$");
-            Match match = regex.Match(Blockid.Text);
-            Match match2 = regex.Match(Blockid2.Text);
+            System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex("^[0-9]*$");
+            System.Text.RegularExpressions.Match match = regex.Match(Blockid.Text);
+            System.Text.RegularExpressions.Match match2 = regex.Match(Blockid2.Text);
             if (match.Success && match2.Success)
             {
                 Task.Run(delegate

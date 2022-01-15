@@ -7,7 +7,7 @@
     <ProjectGuid>{CD19B127-78AD-45F0-989E-B79E265E714B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AssemblyName>CreatorMod</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <ApplicationVersion>1.0.0.0</ApplicationVersion>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>CreatorModAPI</RootNamespace>
@@ -40,23 +40,24 @@
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Comms">
-      <HintPath>..\..\..\..\Ruthless\dll\Comms.dll</HintPath>
-    </Reference>
     <Reference Include="Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\run\Engine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Game\Engine.dll</HintPath>
     </Reference>
     <Reference Include="EntitySystem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\run\EntitySystem.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Game\EntitySystem.dll</HintPath>
     </Reference>
     <Reference Include="Survivalcraft, Version=2.2.40.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\run\Survivalcraft.exe</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Game\Survivalcraft.exe</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Xml">
       <HintPath>..\..\..\DLLbao\Survivalcraft 2_2.2.10.4 原版DLL文件\dlls\System.Xml.dll</HintPath>
     </Reference>
@@ -66,6 +67,12 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CW2\BaseMod\CW2Base.cs" />
+    <Compile Include="CW2\BaseMod\CW2EntityManager.cs" />
+    <Compile Include="CW2\Cw2CopyAndPaste\Cw2CopyAndPaste.cs" />
+    <Compile Include="CW2\Geometry\Cuboid.cs" />
+    <Compile Include="CW2\Geometry\CW2Fill.cs" />
+    <Compile Include="CW2\Matrix\CW2Matrix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="世界设置\编辑区域\NewEditChunkDialog.cs" />
     <Compile Include="基础模块\input\TextBoxWidget.cs" />

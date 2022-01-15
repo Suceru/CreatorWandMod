@@ -1,7 +1,7 @@
 ﻿using Engine;
 using Game;
 using System;
-using System.IO;
+//using System.IO;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -28,9 +28,9 @@ namespace CreatorModAPI
                 this.player = player;
                 this.dialog = dialog;
                 this.listView = listView;
-                XElement node = ContentManager.Get<XElement>("Dialog/Manager3", (string)null);
+                XElement node = ContentManager.Get<XElement>("Dialog/Manager3");
                 LoadChildren(this, node);
-                ((FontTextWidget)Children.Find<LabelWidget>("Name")).Text=(CreatorMain.Display_Key_Dialog("moddialogname"));
+                (Children.Find<LabelWidget>("Name")).Text = (CreatorMain.Display_Key_Dialog("moddialogname"));
                 cancelButton = Children.Find<ButtonWidget>("Cancel");
                 cancelButton.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Manager3", "Cancel");
                 OK = Children.Find<ButtonWidget>("OK");
@@ -60,13 +60,13 @@ namespace CreatorModAPI
                 {
                     try
                     {
-                        FileStream fileStream = new FileStream(CreatorMain.CopyFile, FileMode.Open);
-                        if (!Directory.Exists(export_CopyFile_Directory))
+                        System.IO.FileStream fileStream = new System.IO.FileStream(CreatorMain.CopyFile, System.IO.FileMode.Open);
+                        if (!System.IO.Directory.Exists(export_CopyFile_Directory))
                         {
-                            Directory.CreateDirectory(export_CopyFile_Directory);
+                            System.IO.Directory.CreateDirectory(export_CopyFile_Directory);
                         }
 
-                        FileStream fileStream2 = new FileStream(export_CopyFile_Directory + "/" + text + ".w", FileMode.OpenOrCreate);
+                        System.IO.FileStream fileStream2 = new System.IO.FileStream(export_CopyFile_Directory + "/" + text + ".w", System.IO.FileMode.OpenOrCreate);
                         fileStream.CopyTo(fileStream2);
                         fileStream2.Dispose();
                         fileStream.Dispose();
@@ -85,17 +85,17 @@ namespace CreatorModAPI
 
                         DialogsManager.HideDialog(this);
                         listView.ClearItems();
-                        if (!Directory.Exists(CreatorMain.Export_CopyFile_Directory))
+                        if (!System.IO.Directory.Exists(CreatorMain.Export_CopyFile_Directory))
                         {
-                            Directory.CreateDirectory(CreatorMain.Export_CopyFile_Directory);
+                            System.IO.Directory.CreateDirectory(CreatorMain.Export_CopyFile_Directory);
                         }
 
-                        string[] files = Directory.GetFiles(CreatorMain.Export_CopyFile_Directory);
+                        string[] files = System.IO.Directory.GetFiles(CreatorMain.Export_CopyFile_Directory);
                         foreach (string path in files)
                         {
-                            if (Path.GetExtension(path) == ".w")
+                            if (System.IO.Path.GetExtension(path) == ".w")
                             {
-                                listView.AddItem(Path.GetFileName(path));
+                                listView.AddItem(System.IO.Path.GetFileName(path));
                             }
                         }
                     }
@@ -162,9 +162,9 @@ namespace CreatorModAPI
         {
             this.creatorAPI = creatorAPI;
             player = creatorAPI.componentMiner.ComponentPlayer;
-            XElement node = ContentManager.Get<XElement>("Dialog/CopyandPaste", (string)null);
+            XElement node = ContentManager.Get<XElement>("Dialog/CopyandPaste");
             LoadChildren(this, node);
-            ((FontTextWidget)Children.Find<LabelWidget>("Copy and Paste")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "CopyandPaste", "Copy and Paste"));
+            (Children.Find<LabelWidget>("Copy and Paste")).Text = (CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "CopyandPaste", "Copy and Paste"));
             CopyButton = Children.Find<ButtonWidget>("Copy");
             CopyButton.Text = CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "CopyandPaste", "Copy");
             DerivedButton = Children.Find<ButtonWidget>("Export");
@@ -188,17 +188,17 @@ namespace CreatorModAPI
         private void UpList()
         {
             ListView.ClearItems();
-            if (!Directory.Exists(CreatorMain.Export_CopyFile_Directory))
+            if (!System.IO.Directory.Exists(CreatorMain.Export_CopyFile_Directory))
             {
-                Directory.CreateDirectory(CreatorMain.Export_CopyFile_Directory);
+                System.IO.Directory.CreateDirectory(CreatorMain.Export_CopyFile_Directory);
             }
 
-            string[] files = Directory.GetFiles(CreatorMain.Export_CopyFile_Directory);
+            string[] files = System.IO.Directory.GetFiles(CreatorMain.Export_CopyFile_Directory);
             foreach (string path in files)
             {
-                if (Path.GetExtension(path) == ".w")
+                if (System.IO.Path.GetExtension(path) == ".w")
                 {
-                    ListView.AddItem(Path.GetFileName(path));
+                    ListView.AddItem(System.IO.Path.GetFileName(path));
                 }
             }
         }
@@ -224,7 +224,11 @@ namespace CreatorModAPI
                     {
                         try
                         {
-                            CopyAndPaste.PasetData(creatorAPI, CreatorMain.CopyFile, creatorAPI.Position[0], creatorAPI.Position[1]);
+
+
+                            CreatorWand2.Cw2CopyAndPaste.PasetData(creatorAPI, CreatorMain.CopyFile, creatorAPI.Position[0], creatorAPI.Position[1]);
+
+                            // CopyAndPaste.PasetData(creatorAPI, CreatorMain.CopyFile, creatorAPI.Position[0], creatorAPI.Position[1]);
                         }
                         catch (Exception ex2)
                         {
@@ -253,17 +257,17 @@ namespace CreatorModAPI
 
             if (ImportButton.IsClicked)
             {
-                if (!Directory.Exists(CreatorMain.CacheDirectory))
+                if (!System.IO.Directory.Exists(CreatorMain.CacheDirectory))
                 {
-                    Directory.CreateDirectory(CreatorMain.CacheDirectory);
+                    System.IO.Directory.CreateDirectory(CreatorMain.CacheDirectory);
                 }
 
                 string copyFile = CreatorMain.CopyFile;
                 string text = CreatorMain.Export_CopyFile_Directory + "/" + (string)ListView.SelectedItem;
-                if (!text.IsFileInUse() && (!File.Exists(copyFile) || !copyFile.IsFileInUse()))
+                if (!text.IsFileInUse() && (!System.IO.File.Exists(copyFile) || !copyFile.IsFileInUse()))
                 {
-                    FileStream fileStream = new FileStream(text, FileMode.Open);
-                    FileStream fileStream2 = new FileStream(copyFile, FileMode.Create);
+                    System.IO.FileStream fileStream = new System.IO.FileStream(text, System.IO.FileMode.Open);
+                    System.IO.FileStream fileStream2 = new System.IO.FileStream(copyFile, System.IO.FileMode.Create);
                     fileStream.CopyTo(fileStream2);
                     fileStream2.Dispose();
                     fileStream.Dispose();
@@ -335,7 +339,7 @@ namespace CreatorModAPI
                 }
             }
 
-            DerivedButton.IsEnabled = File.Exists(CreatorMain.CopyFile);
+            DerivedButton.IsEnabled = System.IO.File.Exists(CreatorMain.CopyFile);
             if (DerivedButton.IsClicked)
             {
                 DialogsManager.ShowDialog(player.ViewWidget.GameWidget, new DerivedDialog(player, this, ListView));
@@ -347,12 +351,13 @@ namespace CreatorModAPI
                 {
                     try
                     {
-                        if (!Directory.Exists(CreatorMain.CacheDirectory))
+                        if (!System.IO.Directory.Exists(CreatorMain.CacheDirectory))
                         {
-                            Directory.CreateDirectory(CreatorMain.CacheDirectory);
+                            System.IO.Directory.CreateDirectory(CreatorMain.CacheDirectory);
                         }
-
-                        CopyAndPaste.CreateCopy(creatorAPI, CreatorMain.CacheDirectory, "CacheFile.cd", creatorAPI.Position[0], creatorAPI.Position[1]);
+                        CreatorWand2.Cw2CopyAndPaste.CreateCopy(creatorAPI, CreatorMain.CacheDirectory, "CacheFile.cd", creatorAPI.Position[0], creatorAPI.Position[1]);
+                        //CreatorWand2.Cw2CopyAndPaste.CreateCopy(creatorAPI, CreatorMain.CacheDirectory, "CacheFile.cd", creatorAPI.Position[0], creatorAPI.Position[1]);
+                        //CopyAndPaste.CreateCopy(creatorAPI, CreatorMain.CacheDirectory, "CacheFile.cd", creatorAPI.Position[0], creatorAPI.Position[1]);
                     }
                     catch (Exception ex)
                     {

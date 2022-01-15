@@ -37,10 +37,10 @@ namespace CreatorModAPI
         public SphereDialog(CreatorAPI creatorAPI)
             : base(creatorAPI)
         {
-            XElement node = ContentManager.Get<XElement>("Dialog/Sphere", (string)null);
+            XElement node = ContentManager.Get<XElement>("Dialog/Sphere");
             LoadChildren(this, node);
             GeneralSet();
-            ((FontTextWidget)Children.Find<LabelWidget>("Sphere")).Text=(CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Sphere", "Sphere"));
+            (Children.Find<LabelWidget>("Sphere")).Text = (CreatorMain.Display_Key_UI(CreatorAPI.Language.ToString(), "Sphere", "Sphere"));
             XRadius = Children.Find<SliderWidget>("XSlider");
             YRadius = Children.Find<SliderWidget>("YSlider");
             ZRadius = Children.Find<SliderWidget>("ZSlider");
@@ -67,9 +67,9 @@ namespace CreatorModAPI
             DoublePositionButton.Color = (DoublePosition ? Color.Yellow : Color.White);
             AdvancedGenerate.IsVisible = advanced;
             DoublePositionButton.IsVisible = advanced;
-            ((FontTextWidget)XdelayLabel).Text=(advanced ? string.Format(CreatorMain.Display_Key_Dialog("spdialogx"), (int)XRadius.Value) : string.Format(CreatorMain.Display_Key_Dialog("spdialogr"), (int)XRadius.Value));
-            ((FontTextWidget)YdelayLabel).Text=(string.Format(CreatorMain.Display_Key_Dialog("spdialogy"), (int)YRadius.Value));
-            ((FontTextWidget)ZdelayLabel).Text=(string.Format(CreatorMain.Display_Key_Dialog("spdialogz"), (int)ZRadius.Value));
+            (XdelayLabel).Text = (advanced ? string.Format(CreatorMain.Display_Key_Dialog("spdialogx"), (int)XRadius.Value) : string.Format(CreatorMain.Display_Key_Dialog("spdialogr"), (int)XRadius.Value));
+            (YdelayLabel).Text = (string.Format(CreatorMain.Display_Key_Dialog("spdialogy"), (int)YRadius.Value));
+            (ZdelayLabel).Text = (string.Format(CreatorMain.Display_Key_Dialog("spdialogz"), (int)ZRadius.Value));
             int id = blockIconWidget.Value;
             if (DoublePositionButton.IsClicked)
             {

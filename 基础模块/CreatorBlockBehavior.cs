@@ -21,9 +21,9 @@ namespace CreatorModAPI
             public PasswordDialog(ComponentPlayer player)
             {
                 this.player = player;
-                XElement node = ContentManager.Get<XElement>("Dialog/Manager3", (string)null);
+                XElement node = ContentManager.Get<XElement>("Dialog/Manager3");
                 LoadChildren(this, node);
-                ((FontTextWidget)Children.Find<LabelWidget>("Name")).Text="请输入密匙";
+                (Children.Find<LabelWidget>("Name")).Text = "请输入密匙";
                 cancelButton = Children.Find<ButtonWidget>("Cancel");
                 OK = Children.Find<ButtonWidget>("OK");
                 TextBox = Children.Find<Game.TextBoxWidget>("BlockID");

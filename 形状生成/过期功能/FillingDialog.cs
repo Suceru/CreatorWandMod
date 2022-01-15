@@ -16,7 +16,7 @@ namespace CreatorModAPI
         public FillingDialog(CreatorAPI creatorAPI)
             : base(creatorAPI)
         {
-            XElement node = ContentManager.Get<XElement>("Dialog/Fill", (string)null);
+            XElement node = ContentManager.Get<XElement>("Dialog/Fill");
             LoadChildren(this, node);
             GeneralSet();
             setShaftXYZ();
