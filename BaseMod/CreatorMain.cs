@@ -69,14 +69,15 @@ namespace CreatorWandModAPI
 
         public static List<Point3> Position;
 
-        public static string version = "2.2.10.M.51B";
+        public static string version = "2.2.10.M.61B";
 
-        public static int Numversion = 104910;
+        public static int Numversion = 105172;
 
         public static int[] Sumnumversion = new int[]
         {
             104910,
-           104590
+           104590,
+           105172
         };
 
         public static int[] Donotnumversion = new int[]

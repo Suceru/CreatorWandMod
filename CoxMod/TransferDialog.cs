@@ -32,38 +32,38 @@ namespace CreatorWandModAPI
         private readonly ComponentPlayer player;
 
         // private Regex Regex;
-
+        //Margin = new Vector2(120fx, 60fy)
         public TransferDialog(CreatorAPI creatorAPI)
         {
             P1 = new BevelledButtonWidget
             {
                 Text = "Point1",
                 Size = new Vector2(120f, 60f),
-                Margin = new Vector2(120f, 60f)
+                Margin = new Vector2(0*120f, 0*60f)
             };
             P2 = new BevelledButtonWidget
             {
                 Text = "Point2",
                 Size = new Vector2(120f, 60f),
-                Margin = new Vector2(240f, 60f)
+                Margin = new Vector2(0 * 120f, 1 * 60f)
             };
             P3 = new BevelledButtonWidget
             {
                 Text = "Point3",
                 Size = new Vector2(120f, 60f),
-                Margin = new Vector2(360f, 60f)
+                Margin = new Vector2(0 * 120f, 2 * 60f)
             };
             P4 = new BevelledButtonWidget
             {
                 Text = "Point4",
                 Size = new Vector2(120f, 60f),
-                Margin = new Vector2(480f, 60f)
+                Margin = new Vector2(0 * 120f, 3 * 60f)
             };
             Spawn = new BevelledButtonWidget
             {
                 Text = "Spawn",
                 Size = new Vector2(120f, 60f),
-                Margin = new Vector2(120f, 120f)
+                Margin = new Vector2(0 * 120f, 4 * 60f)
             };
             player = creatorAPI.componentMiner.ComponentPlayer;
             subsystemTerrain = player.Project.FindSubsystem<SubsystemTerrain>(throwOnError: true);
@@ -99,13 +99,6 @@ namespace CreatorWandModAPI
                 X.Text = X.Text;// Regex.Replace(X.Text, "");
                 Y.Text = Y.Text;// Regex.Replace(Y.Text, "");
                 Z.Text = Z.Text;//Regex.Replace(Z.Text, "");
-            }
-
-            if (Spawn.IsClicked)
-            {
-                player.ComponentBody.Position = player.PlayerData.SpawnPosition;
-                player.ComponentGui.DisplaySmallMessage(string.Format(CreatorMain.Display_Key_Dialog("tradialog2"), (int)player.PlayerData.SpawnPosition.X, (int)player.PlayerData.SpawnPosition.Y, (int)player.PlayerData.SpawnPosition.Z), Color.LightYellow, blinking: true, playNotificationSound: true);
-                DialogsManager.HideDialog(this);
             }
 
             if (CreatorMain.Position != null)
@@ -155,12 +148,52 @@ namespace CreatorWandModAPI
                     position = new Vector3(CreatorMain.Position[3]);
                     flag = true;
                 }
+                if (Spawn.IsClicked)
+                {
+                   
+                    //player.ComponentBody.Position
+                        position = player.PlayerData.SpawnPosition;
+                    flag = true;
+                }
 
                 if (flag)
                 {
-                    player.ComponentBody.Position = position;
+                    if (CreatorWand2.CW2FindNoCollidable.FindNoCollidable(new Point3(position)))
+                    {
+                        player.ComponentBody.Position = position+new Vector3(0.5f,0,0.5f);
+
+                    }
+                    else if (CreatorWand2.CW2FindNoCollidable.FindNoCollidable(new Point3((int)position.X, (int)(position.Y+1), (int)position.Z)))
+                    {
+                        player.ComponentBody.Position = position + new Vector3(0.5f, 0, 0.5f);
+                    }
+                    bool finded = false;
+                        for (int vectorL = 1; finded != true; vectorL++)
+                        {
+                            for (int i = 0; i < CreatorWand2.CW2FindNoCollidable.BlockToPoint3.Length; i++)
+                            {
+                                if (position.Y + CreatorWand2.CW2FindNoCollidable.BlockToPoint3[i].Y * vectorL <= 0 || position.Y + 1 + CreatorWand2.CW2FindNoCollidable.BlockToPoint3[i].Y * vectorL > 255)
+                                {
+                                    
+                                }
+                                if (CreatorWand2.CW2FindNoCollidable.FindNoCollidable(new Point3(position) + CreatorWand2.CW2FindNoCollidable.BlockToPoint3[i] * vectorL))
+                                {
+                                    player.ComponentBody.Position = position + new Vector3(CreatorWand2.CW2FindNoCollidable.BlockToPoint3[i]) * vectorL + new Vector3(0.5f, 0, 0.5f);
+                                    finded = true;
+                                    break;
+
+                                }
+                                else if (CreatorWand2.CW2FindNoCollidable.FindNoCollidable(new Point3((int)position.X, (int)(position.Y + 1), (int)position.Z) + CreatorWand2.CW2FindNoCollidable.BlockToPoint3[i] * vectorL))
+                                {
+                                    player.ComponentBody.Position = new Vector3(position.X, position.Y + 1, position.Z) + new Vector3(CreatorWand2.CW2FindNoCollidable.BlockToPoint3[i]) * vectorL + new Vector3(0.5f, 0, 0.5f);
+                                    finded = true;
+                                    break;
+                                }
+                            }
+                        }
                     player.ComponentGui.DisplaySmallMessage(string.Format(CreatorMain.Display_Key_Dialog("tradialog2"), (int)position.X, (int)position.Y, (int)position.Z), Color.LightYellow, blinking: true, playNotificationSound: true);
                     DialogsManager.HideDialog(this);
+
                 }
             }
 

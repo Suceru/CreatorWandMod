@@ -49,7 +49,10 @@ namespace CreatorWandModAPI
             {
                 return;
             }
-
+            if (Blockid.Text == "")
+            {
+                Blockid.Text = "0";
+            }
             if (Blockid2.Text == "")
             {
                 Blockid2.Text = "0";

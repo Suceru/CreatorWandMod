@@ -423,7 +423,7 @@ public class CreatorWidget : CanvasWidget
 		if (SetPositionButton.IsClicked)
 		{
 			Vector3 position2 = player.ComponentBody.Position;
-			Point3 point3 = new Point3((int)position2.X, (int)position2.Y, (int)position2.Z);
+			Point3 point3 = new Point3((int)MathUtils.Floor( position2.X), (int)MathUtils.Floor(position2.Y), (int)MathUtils.Floor(position2.Z));
 			DialogsManager.ShowDialog(null, new ListSelectionDialog(CreatorMain.Display_Key_Dialog("creatorWidgetsetpt"), new int[4] { 1, 2, 3, 4 }, 56f, (object e) => string.Format("{0}{1}", CreatorMain.Display_Key_Dialog("creatorWidgetsetp1"), (int)e), delegate (object e)
 			{
 				creatorAPI.Position[(int)e - 1] = point3;

@@ -76,6 +76,7 @@
     <Compile Include="BaseMod\CreatorMain.cs" />
     <Compile Include="BaseMod\CreatorModAPIEditPaletteDialog.cs" />
     <Compile Include="BaseMod\CreatorWidget.cs" />
+    <Compile Include="CW2\BaseMod\CW2FindNoCollidable.cs" />
     <Compile Include="BaseMod\File\FileOperation.cs" />
     <Compile Include="BaseMod\input\TextBoxWidget.cs" />
     <Compile Include="BaseMod\InterfaceDialog.cs" />

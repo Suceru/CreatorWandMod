@@ -10,15 +10,10 @@ namespace CreatorWandModAPI
             int num = 0;
             CreatorMain.Math.StarttoEnd(ref Start, ref End);
             bool flag = false;
-            bool flag2 = false;
-            if (Src_Param >= 1024 || Src_Param < 0)
-            {
-                flag = true;
-            }
-
+            bool Outflagcox = false;
             if (Des_Param >= 1024 || Src_Param < 0)
             {
-                flag2 = true;
+                Outflagcox = true;
             }
 
             for (int i = Start.Y; i <= End.Y; i++)
@@ -31,7 +26,7 @@ namespace CreatorWandModAPI
                         {
                             if (Src_Param == GameManager.Project.FindSubsystem<SubsystemTerrain>(throwOnError: true).Terrain.GetCellContentsFast(k, i, j))
                             {
-                                if (flag2)
+                                if (Outflagcox)
                                 {
                                     GameManager.Project.FindSubsystem<SubsystemTerrain>(throwOnError: true).ChangeCell(k, i, j, Terrain.MakeBlockValue(Terrain.ExtractContents(Des_Param), Terrain.ExtractLight(Des_Param), Terrain.ExtractData(Des_Param)));
                                 }
@@ -45,7 +40,7 @@ namespace CreatorWandModAPI
                         }
                         else if (Terrain.ExtractContents(Src_Param) == GameManager.Project.FindSubsystem<SubsystemTerrain>(throwOnError: true).Terrain.GetCellContentsFast(k, i, j) && Terrain.ExtractData(Src_Param) == Terrain.ExtractData(GameManager.Project.FindSubsystem<SubsystemTerrain>(throwOnError: true).Terrain.GetCellValue(k, i, j)))
                         {
-                            if (flag2)
+                            if (Outflagcox)
                             {
                                 GameManager.Project.FindSubsystem<SubsystemTerrain>(throwOnError: true).ChangeCell(k, i, j, Terrain.MakeBlockValue(Terrain.ExtractContents(Des_Param), Terrain.ExtractLight(Des_Param), Terrain.ExtractData(Des_Param)));
                             }

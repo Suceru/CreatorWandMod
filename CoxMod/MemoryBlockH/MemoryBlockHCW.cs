@@ -275,7 +275,8 @@ namespace CreatorWandModAPI
                                 Write(clickpos, (byte)pp);
                                 lastvalue = pp;
                                 clickpos++;
-                                if (clickpos >= 255)
+                                //point220117A01
+                                if (clickpos > 255)
                                 {
                                     clickpos = 0;
                                 }
@@ -321,7 +322,8 @@ namespace CreatorWandModAPI
                                     Write(clickpos, 0);
                                     lastvalue = 0;
                                     clickpos++;
-                                    if (clickpos >= 255)
+                                    //point220117A01
+                                    if (clickpos > 255)
                                     {
                                         clickpos = 0;
                                     }
@@ -502,7 +504,7 @@ namespace CreatorWandModAPI
                 {
                     return;
                 }
-
+                //point
                 for (int i = 0; i < list.Count; i++)
                 {
                     if (i == clickpos)
