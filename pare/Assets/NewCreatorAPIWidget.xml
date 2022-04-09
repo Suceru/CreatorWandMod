@@ -38,7 +38,7 @@
 
 				<UniformSpacingPanelWidget Direction="Horizontal" HorizontalAlignment="Center">
 					<StackPanelWidget Direction="Horizontal" HorizontalAlignment="Center" Margin="5, 0">
-						<BevelledButtonWidget Text="填充" Size="240, 60" Name="Fill" />
+						<BevelledButtonWidget Text="填满" Size="240, 60" Name="Fill" />
 						<BevelledButtonWidget Text="山脉" Size="240, 60" Name="Mountains" />
 						<BevelledButtonWidget Text="传送" Size="240, 60" Name="Teleport" />
 					</StackPanelWidget>

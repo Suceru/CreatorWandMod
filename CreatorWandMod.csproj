@@ -46,15 +46,15 @@
   <ItemGroup>
     <Reference Include="Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dlls\1.33\Engine.dll</HintPath>
+      <HintPath>Dlls\2.3API1.4\Engine.dll</HintPath>
     </Reference>
     <Reference Include="EntitySystem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dlls\1.33\EntitySystem.dll</HintPath>
+      <HintPath>Dlls\2.3API1.4\EntitySystem.dll</HintPath>
     </Reference>
-    <Reference Include="Survivalcraft, Version=2.2.40.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Survivalcraft, Version=2.3.41.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dlls\1.33\Survivalcraft.exe</HintPath>
+      <HintPath>Dlls\2.3API1.4\Survivalcraft.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.IO.Compression.FileSystem" />
@@ -135,7 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BaseMod\Widget\" />
-    <Folder Include="Dlls\1.33\" />
+    <Folder Include="Dlls\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="pare\Creator Wand.csv" />

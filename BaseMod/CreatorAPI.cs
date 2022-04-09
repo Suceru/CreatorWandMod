@@ -73,7 +73,7 @@ public class CreatorAPI
 	{
 		try
 		{
-			switch (ModsManager.modSettings.languageType)
+			/*switch (ModsManager.ModSettings.languageType)
 			{
 				case LanguageControl.LanguageType.en_US:
 				case LanguageControl.LanguageType.ot_OT:
@@ -85,7 +85,8 @@ public class CreatorAPI
 				default:
 					CreatorMain.Language = (Language = Language.en_US);
 					break;
-			}
+			}*/
+			CreatorMain.Language = (Language = Language.en_US);
 			XElement xElement = ContentManager.Get<XElement>("CreatorDisplay");
 			CreatorDisplayDataDialog = from xe in xElement.Element("CreatorDisplayDialog").Elements("CreatorDisplayData")
 									   where xe.Attribute("Language").Value == Language.ToString()
